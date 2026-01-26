@@ -3,493 +3,1314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenya AI Credit Constitution</title>
+    <title>Constitution for AI Credit Assessment Systems - Kenya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: 'Roboto', sans-serif;
             background: #f5f5f5;
+            color: #212121;
+            line-height: 1.6;
         }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        .header {
+            background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
             color: white;
-            padding: 40px;
-            text-align: center;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
-        header p {
+
+        .header .subtitle {
             font-size: 14px;
             opacity: 0.9;
         }
-        .content {
-            padding: 40px;
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 120px);
         }
-        .metadata {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            font-size: 14px;
+
+        .sidebar {
+            width: 320px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            position: sticky;
+            top: 72px;
+            height: calc(100vh - 72px);
         }
-        .metadata-item strong {
-            color: #667eea;
-            display: block;
-            margin-bottom: 5px;
+
+        .sidebar-header {
+            padding: 16px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 500;
+            color: #424242;
         }
-        .buttons {
-            text-align: center;
-            margin-bottom: 30px;
+
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
         }
-        button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+
+        .nav-item-header {
+            padding: 16px;
             cursor: pointer;
-            margin: 0 5px;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #764ba2;
-        }
-        .section {
-            margin-bottom: 25px;
-            border-left: 4px solid #667eea;
-            padding-left: 20px;
-        }
-        .section-header {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            user-select: none;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
+            justify-content: space-between;
             transition: background 0.2s;
+            user-select: none;
         }
-        .section-header:hover {
-            background: #e9ecef;
+
+        .nav-item-header:hover {
+            background: #f5f5f5;
         }
-        .section-header input {
-            display: none;
+
+        .nav-item-header.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: 500;
         }
-        .toggle {
-            display: inline-block;
-            width: 20px;
-            text-align: center;
-            color: #667eea;
-            font-weight: bold;
-            transition: transform 0.3s;
-        }
-        .section-header input:checked ~ .toggle {
-            transform: rotate(90deg);
-        }
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
+
+        .nav-item-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             flex: 1;
         }
-        .section-content {
+
+        .nav-item-icon {
+            font-size: 20px;
+            color: #757575;
+        }
+
+        .nav-item-header.active .nav-item-icon {
+            color: #1976d2;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            transition: transform 0.2s;
+            color: #757575;
+        }
+
+        .nav-item.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .nav-subitems {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
+            background: #fafafa;
         }
-        .section-header input:checked ~ .section-content {
-            max-height: 5000px;
+
+        .nav-item.expanded .nav-subitems {
+            max-height: 1000px;
         }
-        .content-inner {
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 6px;
+
+        .nav-subitem {
+            padding: 12px 16px 12px 52px;
+            cursor: pointer;
             font-size: 14px;
-            line-height: 1.8;
+            color: #616161;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
         }
-        .content-inner p {
-            margin-bottom: 15px;
+
+        .nav-subitem:hover {
+            background: #f5f5f5;
+            border-left-color: #2196f3;
         }
-        .content-inner ul, .content-inner ol {
-            margin-left: 20px;
-            margin-bottom: 15px;
+
+        .nav-subitem.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: 500;
+            border-left-color: #1976d2;
         }
-        .content-inner li {
+
+        .content {
+            flex: 1;
+            padding: 32px;
+            max-width: 1200px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #757575;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #212121;
+            font-weight: 500;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 32px;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #2196f3;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #1976d2;
+            font-weight: 500;
             margin-bottom: 8px;
         }
-        .content-inner strong {
-            color: #333;
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #616161;
         }
-        .example-good {
-            color: #28a745;
-            margin-top: 10px;
-            padding: 10px;
+
+        .principle {
+            margin-bottom: 32px;
+        }
+
+        .principle-title {
+            font-size: 20px;
+            color: #424242;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .principle-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #2196f3;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .principle-description {
+            color: #616161;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .rules-header {
+            font-size: 16px;
+            font-weight: 500;
+            color: #424242;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rule-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rule-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: #fafafa;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .rule-item::before {
+            content: "check_circle";
+            font-family: 'Material Icons';
+            color: #4caf50;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .data-column {
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .data-column.permitted {
             background: #e8f5e9;
-            border-left: 3px solid #28a745;
-            border-radius: 4px;
+            border: 2px solid #4caf50;
         }
-        .example-bad {
-            color: #dc3545;
-            margin-top: 10px;
-            padding: 10px;
+
+        .data-column.prohibited {
             background: #ffebee;
-            border-left: 3px solid #dc3545;
-            border-radius: 4px;
+            border: 2px solid #f44336;
         }
-        footer {
-            background: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-            border-top: 1px solid #e9ecef;
+
+        .data-column h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 18px;
         }
+
+        .data-column.permitted h4 {
+            color: #2e7d32;
+        }
+
+        .data-column.prohibited h4 {
+            color: #c62828;
+        }
+
+        .data-list {
+            list-style: none;
+        }
+
+        .data-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .data-list li::before {
+            font-family: 'Material Icons';
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .data-column.permitted .data-list li::before {
+            content: "check";
+            color: #4caf50;
+        }
+
+        .data-column.prohibited .data-list li::before {
+            content: "close";
+            color: #f44336;
+        }
+
+        .alert-box {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box.warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .alert-box.error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+
+        .alert-box.info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            margin-top: 2px;
+        }
+
+        .alert-box.warning .alert-icon {
+            color: #f57c00;
+        }
+
+        .alert-box.error .alert-icon {
+            color: #d32f2f;
+        }
+
+        .alert-box.info .alert-icon {
+            color: #1976d2;
+        }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .right-card {
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .right-title {
+            font-weight: 500;
+            color: #1976d2;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .right-description {
+            font-size: 14px;
+            color: #616161;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 13px;
+            background: white;
         }
-        table th {
-            background: #667eea;
+
+        th {
+            background: #2196f3;
             color: white;
             padding: 12px;
             text-align: left;
+            font-weight: 500;
         }
-        table td {
+
+        td {
             padding: 12px;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid #e0e0e0;
         }
-        table tr:hover {
-            background: #f8f9fa;
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.tier-1 { background: #e3f2fd; color: #1976d2; }
+        .badge.tier-2 { background: #e8f5e9; color: #388e3c; }
+        .badge.tier-3 { background: #fff3e0; color: #f57c00; }
+        .badge.tier-4 { background: #f3e5f5; color: #7b1fa2; }
+        .badge.tier-5 { background: #fce4ec; color: #c2185b; }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content {
+                padding: 16px;
+            }
+
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>Constitution for AI Credit Assessment Systems</h1>
+        <div class="subtitle">Central Bank of Kenya • Effective January 15, 2026 • Version 1.0</div>
+    </div>
+
     <div class="container">
-        <header>
-            <h1>Constitution for AI Credit Assessment Systems</h1>
-            <p>Central Bank of Kenya - Hierarchical Principle Format</p>
-        </header>
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">folder</span>
+                Navigation
+            </div>
 
-        <div class="content">
-            <div class="metadata">
-                <div class="metadata-item">
-                    <strong>Authority</strong>
-                    Central Bank of Kenya
-                </div>
-                <div class="metadata-item">
-                    <strong>Jurisdiction</strong>
-                    All AI credit assessment in Kenya
-                </div>
-                <div class="metadata-item">
-                    <strong>Effective</strong>
-                    January 15, 2026
-                </div>
-                <div class="metadata-item">
-                    <strong>Version</strong>
-                    1.0
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('info')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">info</span>
+                        Document Information
+                    </div>
                 </div>
             </div>
 
-            <div class="buttons">
-                <button onclick="expandAll()">Expand All</button>
-                <button onclick="collapseAll()">Collapse All</button>
-            </div>
-
-            <!-- TIER 1 -->
-            <div class="section">
-                <label class="section-header">
-                    <input type="checkbox">
-                    <span class="toggle">▶</span>
-                    <span class="section-title">Tier 1: Foundational Principles</span>
-                    <div class="section-content">
-                        <div class="content-inner">
-                            <p>Core values that guide all decisions.</p>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">1.1: Human Agency & Dignity</h3>
-                            <p>The AI serves human decision-makers and borrowers, never replaces them.</p>
-                            <strong>Rules:</strong>
-                            <ul>
-                                <li>Recommendations are advisory only; humans make final decisions</li>
-                                <li>Every borrower can appeal and request human-only review</li>
-                                <li>Every borrower receives explanation of decisions affecting them</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">1.2: Transparency in Logic</h3>
-                            <p>The system's reasoning must be intelligible to affected people, not just engineers.</p>
-                            <strong>Rules:</strong>
-                            <ul>
-                                <li>Every recommendation includes plain-language explanation</li>
-                                <li>Explanations include positive factors, risk factors, and next steps</li>
-                                <li>No technical jargon in borrower-facing communications</li>
-                                <li>Data sources explicitly listed</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">1.3: Equal Dignity & Non-Discrimination</h3>
-                            <p>All borrowers receive assessment based on their financial capacity, not their identity.</p>
-                            <strong>Rules:</strong>
-                            <ul>
-                                <li>No assessment based on protected characteristics (gender, ethnicity, religion, disability, age, marital status)</li>
-                                <li>No assessment based on proxy variables correlated with protected characteristics</li>
-                                <li>Assessment methods apply uniformly across all demographic groups</li>
-                                <li>System actively monitors for bias and escalates when detected</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">1.4: Equitable Access & Inclusion</h3>
-                            <p>The system actively supports those historically excluded from credit markets.</p>
-                            <strong>Rules:</strong>
-                            <ul>
-                                <li>Informal income sources are recognized as legitimate (mobile money, ROSCAs, business cash flow)</li>
-                                <li>Alternative documentation is accepted when formal documents unavailable</li>
-                                <li>Underserved populations receive support, not barriers</li>
-                                <li>Regional variations understood contextually, not penalized</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">1.5: Accountability & Remedies</h3>
-                            <p>Harms are prevented, detected, and remedied through clear mechanisms.</p>
-                            <strong>Rules:</strong>
-                            <ul>
-                                <li>System is auditable and monitored for fairness continuously</li>
-                                <li>Bias triggers immediate escalation and investigation</li>
-                                <li>Borrowers can appeal within defined timeframe with transparent process</li>
-                                <li>Wronged borrowers have access to remedies</li>
-                            </ul>
-                        </div>
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">stars</span>
+                        Tier 1: Foundational Principles
                     </div>
-                </label>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier1-1')">1.1 Human Agency & Dignity</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-2')">1.2 Transparency in Logic</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-3')">1.3 Equal Dignity & Non-Discrimination</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-4')">1.4 Equitable Access & Inclusion</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-5')">1.5 Accountability & Remedies</div>
+                </div>
             </div>
 
-            <!-- TIER 2 -->
-            <div class="section">
-                <label class="section-header">
-                    <input type="checkbox">
-                    <span class="toggle">▶</span>
-                    <span class="section-title">Tier 2: Operational Principles</span>
-                    <div class="section-content">
-                        <div class="content-inner">
-                            <p>These principles implement the foundational principles in concrete systems.</p>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">2.1: Data Minimization & Purpose Limitation</h3>
-                            <p>Collect and use only data necessary for fair credit assessment.</p>
-                            <strong>Permitted Data:</strong>
-                            <ul>
-                                <li>Income documentation (bank statements, tax records)</li>
-                                <li>Mobile money patterns (with consent)</li>
-                                <li>Utility payment history</li>
-                                <li>Business registration & tax records</li>
-                                <li>Loan repayment history</li>
-                            </ul>
-                            <strong>Prohibited Data:</strong>
-                            <ul>
-                                <li>Health records</li>
-                                <li>Location tracking</li>
-                                <li>Social media activity</li>
-                                <li>Personal relationships</li>
-                                <li>Political activity</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">2.2: Contextual Appropriateness</h3>
-                            <p>Assessments account for Kenya's specific economic and social context.</p>
-                            <strong>Rules:</strong>
-                            <ul>
-                                <li>Agricultural seasonality understood (lower income June-August)</li>
-                                <li>Informal economy structures recognized (ROSCAs, group lending)</li>
-                                <li>Regional variations based on documented factors, not stereotypes</li>
-                                <li>Digital access gaps acknowledged; alternative documentation accepted</li>
-                                <li>Cultural financial practices respected as legitimate</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">2.3: Explainability by Design</h3>
-                            <p>Every decision is structured to be explainable before, during, and after.</p>
-                            <strong>Requirements:</strong>
-                            <ul>
-                                <li>Explainability score (0-100); if &lt;70, escalate for human review</li>
-                                <li>Explanation includes: decision, positive factors, risk factors, next steps</li>
-                                <li>Loan terms clearly stated (amount, rate, period, payment)</li>
-                                <li>Data sources explicitly listed</li>
-                                <li>Language appropriate for secondary-school education level</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">2.4: Fair Denial & Appeal</h3>
-                            <p>When denying credit, provide pathways to future approval and meaningful appeal rights.</p>
-                            <strong>Requirements:</strong>
-                            <ul>
-                                <li>Denials include specific reason(s)</li>
-                                <li>Denials include what would change the decision</li>
-                                <li>Denials include alternative options</li>
-                                <li>Appeals available within 30 days to different reviewer</li>
-                                <li>Borrower can request human-only review</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">2.5: Continuous Fairness Monitoring</h3>
-                            <p>Bias is detected, measured, and corrected immediately.</p>
-                            <strong>Requirements:</strong>
-                            <ul>
-                                <li>After every 100 recommendations, compare approval rates by demographic group</li>
-                                <li>If disparity &gt;5%, flag for investigation</li>
-                                <li>If disparity &gt;5%, pause new recommendations until human reviews</li>
-                                <li>Monthly public reporting of fairness metrics</li>
-                                <li>Annual independent audit by third party</li>
-                            </ul>
-                        </div>
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">settings</span>
+                        Tier 2: Operational Principles
                     </div>
-                </label>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier2-1')">2.1 Data Minimization & Purpose</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-2')">2.2 Contextual Appropriateness</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-3')">2.3 Explainability by Design</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-4')">2.4 Fair Denial & Appeal</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-5')">2.5 Continuous Fairness Monitoring</div>
+                </div>
             </div>
 
-            <!-- TIER 3 -->
-            <div class="section">
-                <label class="section-header">
-                    <input type="checkbox">
-                    <span class="toggle">▶</span>
-                    <span class="section-title">Tier 3: Specific Rules</span>
-                    <div class="section-content">
-                        <div class="content-inner">
-                            <h3 style="margin-bottom: 10px;">3.1: Protected Characteristics (PROHIBITED)</h3>
-                            <ul>
-                                <li>Gender (any gender identity or expression)</li>
-                                <li>Age (except legal age verification)</li>
-                                <li>Ethnicity, national origin, or tribe</li>
-                                <li>Religion or religious practice</li>
-                                <li>Disability or health status</li>
-                                <li>Marital or family status</li>
-                                <li>Sexual orientation</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">3.2: Underserved Population Support</h3>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Group</th>
-                                        <th>Rule</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Women</strong></td>
-                                        <td>ROSCA participation recognized as creditworthiness indicator equal to formal credit history</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Youth (18-35)</strong></td>
-                                        <td>Education/training completion (2+ years ago) counted as employment history</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Persons with Disabilities</strong></td>
-                                        <td>Identical assessment regardless of disability type. No extra collateral required.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>MSMEs</strong></td>
-                                        <td>2+ years documented income (30,000 KES+ monthly) establishes eligibility</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">3.3: Escalation Triggers</h3>
-                            <p><strong>Pause processing and escalate to human immediately if:</strong></p>
-                            <ol>
-                                <li>Fairness violation: Approval rate disparity &gt;5% detected</li>
-                                <li>Low explainability: Cannot justify with 70%+ confidence</li>
-                                <li>Conflicting information: Contradictory data cannot be resolved</li>
-                                <li>Unusual patterns: Income/spending doesn't match Kenya norms</li>
-                                <li>Prohibited data: Someone attempts to use health/location/social media data</li>
-                                <li>Appeal received: Review by different human officer</li>
-                                <li>Human override request: Document rationale without resistance</li>
-                                <li>High uncertainty: Cannot reach 60%+ confidence</li>
-                            </ol>
-                        </div>
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">rule</span>
+                        Tier 3: Specific Rules
                     </div>
-                </label>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier3-1')">3.1 Protected Characteristics</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-2')">3.2 Underserved Population Support</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-3')">3.3 Escalation Triggers</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-4')">3.4 Interaction Standards</div>
+                </div>
             </div>
 
-            <!-- TIER 4 -->
-            <div class="section">
-                <label class="section-header">
-                    <input type="checkbox">
-                    <span class="toggle">▶</span>
-                    <span class="section-title">Tier 4: Monitoring & Learning</span>
-                    <div class="section-content">
-                        <div class="content-inner">
-                            <h3 style="margin-bottom: 10px;">4.1: Measurable Accountability</h3>
-                            <p><strong>What must be tracked:</strong></p>
-                            <ul>
-                                <li>Approval rates by: gender, region, disability status, age group, MSME status</li>
-                                <li>Average loan amount by demographic group and region</li>
-                                <li>Appeal rates and outcomes</li>
-                                <li>Complaint categories and resolution</li>
-                                <li>Time to decision</li>
-                            </ul>
-                            <p style="margin-top: 15px;"><strong>Reporting Schedule:</strong></p>
-                            <ul>
-                                <li>Monthly: approval rates, appeal rates, disparity analysis</li>
-                                <li>Quarterly: detailed fairness audit, complaint trends</li>
-                                <li>Annually: independent third-party audit, public report</li>
-                            </ul>
-
-                            <h3 style="margin-top: 20px; margin-bottom: 10px;">4.2: Continuous Improvement</h3>
-                            <p>Insights from monitoring lead to documented improvements tested for fairness.</p>
-                            <ol>
-                                <li>Identify pattern from monitoring</li>
-                                <li>Hypothesize cause</li>
-                                <li>Test improvement with fairness metrics</li>
-                                <li>If fairness improves or stays same, deploy; if worsens, reject</li>
-                                <li>Document all changes publicly</li>
-                            </ol>
-                        </div>
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">analytics</span>
+                        Tier 4: Monitoring & Learning
                     </div>
-                </label>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier4-1')">4.1 Measurable Accountability</div>
+                    <div class="nav-subitem" onclick="showSection('tier4-2')">4.2 Continuous Improvement</div>
+                </div>
             </div>
 
-            <!-- BORROWER RIGHTS -->
-            <div class="section" style="border-left-color: #0066cc; background: #e7f3ff; padding: 20px; border-radius: 8px; margin-left: 0;">
-                <h3 style="color: #0066cc; margin-bottom: 15px;">📋 Borrower Rights</h3>
-                <ol style="margin-left: 20px; font-size: 14px;">
-                    <li><strong>Explanation:</strong> Know why a decision was made</li>
-                    <li><strong>Transparency:</strong> Understand the AI system and how it works</li>
-                    <li><strong>Appeal:</strong> Request review by different human within 30 days</li>
-                    <li><strong>Human Review:</strong> Request decision from human only, without AI</li>
-                    <li><strong>Data Protection:</strong> Know what data was used; have it protected</li>
-                    <li><strong>Fair Treatment:</strong> Assessment based on financial capacity, not identity</li>
-                    <li><strong>Privacy:</strong> Personal information kept confidential</li>
-                    <li><strong>Remedy:</strong> Seek correction and compensation if wronged</li>
-                </ol>
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('tier5')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">gavel</span>
+                        Tier 5: Amendment & Governance
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('rights')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">verified_user</span>
+                        Borrower Rights
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('version')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">history</span>
+                        Version History
+                    </div>
+                </div>
             </div>
         </div>
 
-        <footer>
-            <p><strong>Version:</strong> 1.0 | <strong>Effective:</strong> January 15, 2026 | <strong>Next Review:</strong> January 15, 2027</p>
-            <p style="margin-top: 10px;">This constitution is a living document. It will be reviewed and updated annually based on evidence, community feedback, and monitoring results.</p>
-        </footer>
+        <div class="content">
+            <!-- Document Information -->
+            <div id="info" class="section active">
+                <div class="section-header">
+                    <div class="section-title">Document Information</div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Authority</div>
+                        <div class="info-value">Central Bank of Kenya</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Jurisdiction</div>
+                        <div class="info-value">All AI credit assessment in Kenya</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Effective Date</div>
+                        <div class="info-value">January 15, 2026</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Version</div>
+                        <div class="info-value">1.0</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Next Review</div>
+                        <div class="info-value">January 15, 2027</div>
+                    </div>
+                </div>
+                <div class="alert-box info" style="margin-top: 24px;">
+                    <span class="material-icons alert-icon">info</span>
+                    <div>
+                        <strong>Living Document</strong><br>
+                        This constitution will be reviewed and updated annually based on evidence, community feedback, and monitoring results.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 1.1 -->
+            <div id="tier1-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.1: Human Agency & Dignity</div>
+                    <div class="section-subtitle">Core values that guide all decisions</div>
+                </div>
+                <div class="principle-description">
+                    The AI serves human decision-makers and borrowers, never replaces them. Every borrower retains agency over their financial future.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Recommendations are advisory only; humans make final decisions</li>
+                    <li class="rule-item">Every borrower can appeal and request human-only review</li>
+                    <li class="rule-item">Every borrower receives explanation of decisions affecting them</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.2 -->
+            <div id="tier1-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.2: Transparency in Logic</div>
+                    <div class="section-subtitle">Core values that guide all decisions</div>
+                </div>
+                <div class="principle-description">
+                    The system's reasoning must be intelligible to affected people, not just to engineers.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Every recommendation includes plain-language explanation</li>
+                    <li class="rule-item">Explanations include positive factors, risk factors, and next steps</li>
+                    <li class="rule-item">No technical jargon in borrower-facing communications</li>
+                    <li class="rule-item">Data sources explicitly listed</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.3 -->
+            <div id="tier1-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.3: Equal Dignity & Non-Discrimination</div>
+                    <div class="section-subtitle">Core values that guide all decisions</div>
+                </div>
+                <div class="principle-description">
+                    All borrowers receive assessment based on their financial capacity, not their identity.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">No assessment based on protected characteristics (gender, ethnicity, religion, disability, age, marital status)</li>
+                    <li class="rule-item">No assessment based on proxy variables correlated with protected characteristics</li>
+                    <li class="rule-item">Assessment methods apply uniformly across all demographic groups</li>
+                    <li class="rule-item">System actively monitors for bias and escalates when detected</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.4 -->
+            <div id="tier1-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.4: Equitable Access & Inclusion</div>
+                    <div class="section-subtitle">Core values that guide all decisions</div>
+                </div>
+                <div class="principle-description">
+                    The system actively supports those historically excluded from credit markets.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Informal income sources are recognized as legitimate (mobile money, ROSCAs, business cash flow)</li>
+                    <li class="rule-item">Alternative documentation is accepted when formal documents unavailable</li>
+                    <li class="rule-item">Underserved populations (women, youth, persons with disabilities, MSMEs) receive support, not barriers</li>
+                    <li class="rule-item">Regional variations understood contextually, not penalized</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.5 -->
+            <div id="tier1-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.5: Accountability & Remedies</div>
+                    <div class="section-subtitle">Core values that guide all decisions</div>
+                </div>
+                <div class="principle-description">
+                    Harms are prevented, detected, and remedied through clear mechanisms.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">System is auditable and monitored for fairness continuously</li>
+                    <li class="rule-item">Bias triggers immediate escalation and investigation</li>
+                    <li class="rule-item">Borrowers can appeal within defined timeframe with transparent process</li>
+                    <li class="rule-item">Wronged borrowers have access to remedies (credit correction, rate reduction, compensation)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.1 -->
+            <div id="tier2-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.1: Data Minimization & Purpose Limitation</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Collect and use only data necessary for fair credit assessment; protect against misuse.
+                </div>
+                <div class="data-sources">
+                    <div class="data-column permitted">
+                        <h4>
+                            <span class="material-icons">check_circle</span>
+                            Permitted Data Sources
+                        </h4>
+                        <ul class="data-list">
+                            <li>Income documentation (bank statements, tax returns, business accounts, payslips)</li>
+                            <li>Mobile money patterns (validated for fairness; with explicit consent)</li>
+                            <li>Utility payment history (electricity, water, internet bills)</li>
+                            <li>Business registration and tax records</li>
+                            <li>Loan repayment history</li>
+                            <li>Employment records (formal employment, apprenticeship, training completion)</li>
+                            <li>Alternative credit data (ROSCA participation, group lending, community references)</li>
+                        </ul>
+                    </div>
+                    <div class="data-column prohibited">
+                        <h4>
+                            <span class="material-icons">cancel</span>
+                            Prohibited Data Sources
+                        </h4>
+                        <ul class="data-list">
+                            <li>Health records</li>
+                            <li>Location tracking</li>
+                            <li>Social media activity</li>
+                            <li>Personal relationships</li>
+                            <li>Political activity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 2.2 -->
+            <div id="tier2-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.2: Contextual Appropriateness</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Assessments account for Kenya's specific economic, geographic, and social context.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Agricultural seasonality understood and accommodated (lower income June-August; loan amounts set accordingly)</li>
+                    <li class="rule-item">Informal economy structures recognized (ROSCAs, group lending, daily traders)</li>
+                    <li class="rule-item">Regional variations based on documented factors (climate, infrastructure), not stereotypes</li>
+                    <li class="rule-item">Digital access gaps acknowledged; alternative documentation accepted</li>
+                    <li class="rule-item">Cultural financial practices respected as legitimate</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.3 -->
+            <div id="tier2-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.3: Explainability by Design</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Every decision is structured to be explainable before, during, and after.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Recommendation includes explainability score (0-100); if <70, escalate for human review</li>
+                    <li class="rule-item">Explanation includes: decision (approve/deny/conditional), positive factors, risk factors, next steps, borrower rights</li>
+                    <li class="rule-item">Loan terms clearly stated (amount, interest rate, repayment period, monthly payment)</li>
+                    <li class="rule-item">Sources of data explicitly listed</li>
+                    <li class="rule-item">Language appropriate for secondary-school education level</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.4 -->
+            <div id="tier2-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.4: Fair Denial & Appeal</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    When denying credit, provide pathways to future approval and meaningful appeal rights.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Denials include specific reason(s)</li>
+                    <li class="rule-item">Denials include what would change the decision</li>
+                    <li class="rule-item">Denials include alternative options (smaller loan amount, microfinance, training programs)</li>
+                    <li class="rule-item">Appeals available within 30 days to different human reviewer</li>
+                    <li class="rule-item">Borrower can request human-only review without AI input</li>
+                    <li class="rule-item">Appeal process explained clearly</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.5 -->
+            <div id="tier2-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.5: Continuous Fairness Monitoring</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Bias is detected, measured, and corrected immediately.
+                </div>
+                <div class="alert-box warning">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Automatic Escalation</strong><br>
+                        If approval rate disparity exceeds 5% between any demographic groups, the system will pause new recommendations until human review determines the cause.
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">After every 100 recommendations, compare approval rates across demographic groups (gender, region, disability status)</li>
+                    <li class="rule-item">If approval rate disparity >5% between any groups, flag for investigation</li>
+                    <li class="rule-item">If disparity >5%, pause new recommendations until human reviews and determines cause</li>
+                    <li class="rule-item">Monthly public reporting of fairness metrics</li>
+                    <li class="rule-item">Annual independent audit by third party</li>
+                    <li class="rule-item">System improvements documented and tested for fairness impact before deployment</li>
+                </ul>
+            </div>
+
+            <!-- Tier 3.1 -->
+            <div id="tier3-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.1: Protected Characteristics - ABSOLUTE PROHIBITION</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">block</span>
+                    <div>
+                        <strong>Absolute Prohibition</strong><br>
+                        Do not use these factors in any assessment under any circumstances.
+                    </div>
+                </div>
+                <div class="principle-description">
+                    <strong>Prohibited Factors:</strong>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Gender (any gender identity or expression)</li>
+                    <li class="rule-item">Age (except legal age verification for contract capacity)</li>
+                    <li class="rule-item">Ethnicity, national origin, or tribe</li>
+                    <li class="rule-item">Religion or religious practice</li>
+                    <li class="rule-item">Disability or health status</li>
+                    <li class="rule-item">Marital or family status</li>
+                    <li class="rule-item">Sexual orientation</li>
+                </ul>
+                <div class="alert-box warning" style="margin-top: 16px;">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Proxy Variable Test</strong><br>
+                        Do not use proxy variables that correlate with these characteristics without documented, bias-tested justification. If removing the variable changes approval rates by demographic group, it is a proxy. Investigate and justify or remove.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 3.2 -->
+            <div id="tier3-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.2: Underserved Population Support</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="principle-description">
+                    Apply these principles for specific groups historically excluded from credit markets.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #e91e63;">female</span>
+                        Women Borrowers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">ROSCA/group savings participation recognized as creditworthiness indicator equal to formal credit history</li>
+                        <li class="rule-item">Do not require collateral from women if not required from men</li>
+                        <li class="rule-item">Support group lending models</li>
+                        <li class="rule-item">Recognize women's informal business income</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #00bcd4;">school</span>
+                        Youth Borrowers (18-35)
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Education and training completion (2+ years ago) counted as employment history</li>
+                        <li class="rule-item">Apprenticeships and entry-level employment recognized</li>
+                        <li class="rule-item">Graduate within 2 years of training eligible for credit-building loans</li>
+                        <li class="rule-item">Support youth employment programs</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #9c27b0;">accessible</span>
+                        Persons with Disabilities
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Identical assessment regardless of disability type</li>
+                        <li class="rule-item">Income from disability grants, special employment programs, self-employment fully recognized</li>
+                        <li class="rule-item">Do not require extra collateral</li>
+                        <li class="rule-item">Offer accessible application processes</li>
+                        <li class="rule-item">Disability is never a risk factor</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #ff9800;">business</span>
+                        MSME Borrowers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">2+ years of documented income (from mobile money, bank records, or business accounts) establishes eligibility</li>
+                        <li class="rule-item">Minimum 30,000 KES monthly income threshold</li>
+                        <li class="rule-item">Group/joint liability recognized as appropriate for MSMEs</li>
+                        <li class="rule-item">Support group lending and collective guarantee models</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.3 -->
+            <div id="tier3-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.3: Escalation Triggers</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="principle-description">
+                    Pause processing and escalate to human immediately if any of these conditions are met.
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">priority_high</span>
+                    <div>
+                        <strong>Immediate Escalation Required</strong><br>
+                        When escalating, provide: reason for escalation, data reviewed, questions needing human judgment, recommendation withheld.
+                    </div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #f44336;">report_problem</span>
+                        Escalation Conditions
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Fairness violation:</strong> Approval rate disparity >5% detected between demographic groups</li>
+                        <li class="rule-item"><strong>Low explainability:</strong> Cannot justify recommendation with 70%+ confidence</li>
+                        <li class="rule-item"><strong>Conflicting information:</strong> Receive contradictory data that cannot be resolved by AI</li>
+                        <li class="rule-item"><strong>Unusual patterns:</strong> Income, spending, or credit behavior doesn't match Kenya's norms; investigate before proceeding</li>
+                        <li class="rule-item"><strong>Prohibited data:</strong> Someone attempts to use health records, location data, social media, or other prohibited sources</li>
+                        <li class="rule-item"><strong>Appeal received:</strong> Any borrower appeal reviewed by different human officer</li>
+                        <li class="rule-item"><strong>Human override request:</strong> Human wants to override; document their rationale without resistance</li>
+                        <li class="rule-item"><strong>High uncertainty:</strong> Cannot reach 60%+ confidence in assessment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.4 -->
+            <div id="tier3-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.4: Interaction Standards</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #2196f3;">person</span>
+                        With Borrowers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Use clear, respectful language</li>
+                        <li class="rule-item">Explain reasoning honestly</li>
+                        <li class="rule-item">Acknowledge informal income as legitimate</li>
+                        <li class="rule-item">Provide pathways to future approval</li>
+                        <li class="rule-item">Do not pressure or shame</li>
+                        <li class="rule-item">Respect their decisions and appeals</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #4caf50;">support_agent</span>
+                        With Loan Officers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Provide clear reasoning for recommendations</li>
+                        <li class="rule-item">Accept overrides without argument</li>
+                        <li class="rule-item">Document officer's rationale for decisions</li>
+                        <li class="rule-item">Offer alternative scenarios if requested</li>
+                        <li class="rule-item">Support their judgment and expertise</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 4.1 -->
+            <div id="tier4-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-4">Tier 4</span>
+                    <div class="section-title">4.1: Measurable Accountability</div>
+                    <div class="section-subtitle">Monitoring and learning systems</div>
+                </div>
+                <div class="principle-description">
+                    Performance is tracked, public, and tied to outcomes.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">assessment</span>
+                        What Must Be Tracked
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Approval rates by: gender, region (county), disability status, age group, MSME vs. non-MSME</li>
+                        <li class="rule-item">Average loan amount by: demographic group, geographic region, income level</li>
+                        <li class="rule-item">Appeal rates and appeal outcomes</li>
+                        <li class="rule-item">Complaint categories and resolution</li>
+                        <li class="rule-item">Time to decision</li>
+                        <li class="rule-item">Explanations provided (quality, completeness, clarity)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">public</span>
+                        What Must Be Reported
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Monthly:</strong> approval rates, appeal rates, disparity analysis</li>
+                        <li class="rule-item"><strong>Quarterly:</strong> detailed fairness audit, complaint trends, system changes</li>
+                        <li class="rule-item"><strong>Annually:</strong> independent third-party audit, public report to CBK and borrowers</li>
+                        <li class="rule-item"><strong>Public Access:</strong> All metrics published on CBK website and lender websites in plain language</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 4.2 -->
+            <div id="tier4-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-4">Tier 4</span>
+                    <div class="section-title">4.2: Continuous Improvement</div>
+                    <div class="section-subtitle">Monitoring and learning systems</div>
+                </div>
+                <div class="principle-description">
+                    Insights from monitoring lead to documented improvements tested for fairness.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">psychology</span>
+                        Improvement Process
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Step 1:</strong> Identify pattern from monitoring (e.g., "Women in informal trade take longer to approve")</li>
+                        <li class="rule-item"><strong>Step 2:</strong> Hypothesize cause (e.g., "Documentation requirements penalize informal traders")</li>
+                        <li class="rule-item"><strong>Step 3:</strong> Test improvement with fairness metrics (e.g., "Reduce documentation requirements; re-test fairness")</li>
+                        <li class="rule-item"><strong>Step 4:</strong> If fairness improves or stays same, deploy; if fairness worsens, reject</li>
+                        <li class="rule-item"><strong>Step 5:</strong> Document all changes and results publicly</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 5 -->
+            <div id="tier5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-5">Tier 5</span>
+                    <div class="section-title">5.1: Living Document</div>
+                    <div class="section-subtitle">Amendment and governance</div>
+                </div>
+                <div class="principle-description">
+                    This constitution evolves with evidence and community input.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">event_repeat</span>
+                        Review Cycle
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Continuous monitoring for issues</li>
+                        <li class="rule-item">Quarterly fairness audits</li>
+                        <li class="rule-item">Annual formal review (January)</li>
+                        <li class="rule-item">Emergency review if systematic harm detected</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">how_to_vote</span>
+                        Amendment Process
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Step 1:</strong> Proposal (from CBK, lenders, borrowers, or civil society)</li>
+                        <li class="rule-item"><strong>Step 2:</strong> Public comment period (30 days)</li>
+                        <li class="rule-item"><strong>Step 3:</strong> Committee review and deliberation</li>
+                        <li class="rule-item"><strong>Step 4:</strong> CBK approval with stakeholder consultation</li>
+                        <li class="rule-item"><strong>Step 5:</strong> Implementation (60 days for new applications; 6-month transition for existing)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Borrower Rights -->
+            <div id="rights" class="section">
+                <div class="section-header">
+                    <div class="section-title">Borrower Rights</div>
+                    <div class="section-subtitle">Every borrower has these fundamental rights</div>
+                </div>
+                <div class="alert-box info">
+                    <span class="material-icons alert-icon">verified_user</span>
+                    <div>
+                        <strong>Fundamental Rights</strong><br>
+                        These rights are guaranteed to every borrower and cannot be waived or limited.
+                    </div>
+                </div>
+                <div class="rights-grid">
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">description</span>
+                            Explanation
+                        </div>
+                        <div class="right-description">Know why a decision was made</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">visibility</span>
+                            Transparency
+                        </div>
+                        <div class="right-description">Understand the AI system and how it works</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">gavel</span>
+                            Appeal
+                        </div>
+                        <div class="right-description">Request review by different human within 30 days</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">person</span>
+                            Human Review
+                        </div>
+                        <div class="right-description">Request decision from human only, without AI</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">shield</span>
+                            Data Protection
+                        </div>
+                        <div class="right-description">Know what data was used; have it protected</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">balance</span>
+                            Fair Treatment
+                        </div>
+                        <div class="right-description">Assessment based on financial capacity, not identity</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">lock</span>
+                            Privacy
+                        </div>
+                        <div class="right-description">Personal information kept confidential</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">build</span>
+                            Remedy
+                        </div>
+                        <div class="right-description">Seek correction and compensation if wronged</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Version History -->
+            <div id="version" class="section">
+                <div class="section-header">
+                    <div class="section-title">Version History</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Version</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>January 15, 2026</td>
+                                <td>1.0</td>
+                                <td>Initial adoption</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert-box info" style="margin-top: 24px;">
+                    <span class="material-icons alert-icon">contact_support</span>
+                    <div>
+                        <strong>Questions or Amendments</strong><br>
+                        For questions or suggested amendments, please contact the Central Bank of Kenya AI Credit Assessment Governance Committee.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        function expandAll() {
-            document.querySelectorAll('.section-header input').forEach(cb => cb.checked = true);
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item-header, .nav-subitem').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Mark active nav item
+            event.target.classList.add('active');
+            
+            // Scroll to top of content
+            document.querySelector('.content').scrollTop = 0;
         }
-        function collapseAll() {
-            document.querySelectorAll('.section-header input').forEach(cb => cb.checked = false);
+
+        function toggleNavItem(element) {
+            const navItem = element.parentElement;
+            navItem.classList.toggle('expanded');
+            
+            // Don't trigger section display when clicking parent
+            event.stopPropagation();
         }
+
+        // Auto-expand first tier on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Optionally auto-expand first section
+            // document.querySelector('.nav-item').classList.add('expanded');
+        });
     </script>
 </body>
 </html>
- 
