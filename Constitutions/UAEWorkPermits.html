@@ -1,1 +1,1635 @@
-xyz
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitution for UAE AI Work Permit Processing System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+            color: #212121;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+            color: white;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+
+        .sidebar {
+            width: 340px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            position: sticky;
+            top: 72px;
+            height: calc(100vh - 72px);
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 500;
+            color: #424242;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-item-header {
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .nav-item-header:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-item-header.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: 500;
+        }
+
+        .nav-item-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .nav-item-icon {
+            font-size: 20px;
+            color: #757575;
+        }
+
+        .nav-item-header.active .nav-item-icon {
+            color: #1976d2;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            transition: transform 0.2s;
+            color: #757575;
+        }
+
+        .nav-item.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .nav-subitems {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #fafafa;
+        }
+
+        .nav-item.expanded .nav-subitems {
+            max-height: 2000px;
+        }
+
+        .nav-subitem {
+            padding: 12px 16px 12px 52px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #616161;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-subitem:hover {
+            background: #f5f5f5;
+            border-left-color: #2196f3;
+        }
+
+        .nav-subitem.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: 500;
+            border-left-color: #1976d2;
+        }
+
+        .content {
+            flex: 1;
+            padding: 32px;
+            max-width: 1200px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #757575;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #212121;
+            font-weight: 500;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 32px;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #2196f3;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #1976d2;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #616161;
+        }
+
+        .principle {
+            margin-bottom: 32px;
+        }
+
+        .principle-title {
+            font-size: 20px;
+            color: #424242;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .principle-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #2196f3;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .principle-description {
+            color: #616161;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .rules-header {
+            font-size: 16px;
+            font-weight: 500;
+            color: #424242;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rule-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rule-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: #fafafa;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .rule-item::before {
+            content: "check_circle";
+            font-family: 'Material Icons';
+            color: #4caf50;
+            font-size: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .data-column {
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .data-column.permitted {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+
+        .data-column.prohibited {
+            background: #ffebee;
+            border: 2px solid #f44336;
+        }
+
+        .data-column h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .data-column.permitted h4 {
+            color: #2e7d32;
+        }
+
+        .data-column.prohibited h4 {
+            color: #c62828;
+        }
+
+        .data-list {
+            list-style: none;
+        }
+
+        .data-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .data-list li::before {
+            font-family: 'Material Icons';
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .data-column.permitted .data-list li::before {
+            content: "check";
+            color: #4caf50;
+        }
+
+        .data-column.prohibited .data-list li::before {
+            content: "close";
+            color: #f44336;
+        }
+
+        .alert-box {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box.warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .alert-box.error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+
+        .alert-box.info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            margin-top: 2px;
+        }
+
+        .alert-box.warning .alert-icon {
+            color: #f57c00;
+        }
+
+        .alert-box.error .alert-icon {
+            color: #d32f2f;
+        }
+
+        .alert-box.info .alert-icon {
+            color: #1976d2;
+        }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .right-card {
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .right-title {
+            font-weight: 500;
+            color: #1976d2;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .right-description {
+            font-size: 14px;
+            color: #616161;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #2196f3;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.tier-1 { background: #e3f2fd; color: #1976d2; }
+        .badge.tier-2 { background: #e8f5e9; color: #388e3c; }
+        .badge.tier-3 { background: #fff3e0; color: #f57c00; }
+        .badge.tier-4 { background: #f3e5f5; color: #7b1fa2; }
+        .badge.tier-5 { background: #fce4ec; color: #c2185b; }
+
+        .permit-type-card {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .permit-type-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1976d2;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content {
+                padding: 16px;
+            }
+
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Constitution for UAE AI Work Permit Processing System</h1>
+        <div class="subtitle">Ministry of Human Resources and Emiratisation • Effective January 15, 2026 • Version 1.0</div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">folder</span>
+                Navigation
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('info')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">info</span>
+                        Document Information
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">stars</span>
+                        Tier 1: Foundational Principles
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier1-1')">1.1 Human Decision Authority & Worker Agency</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-2')">1.2 Transparency Throughout Process</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-3')">1.3 Fair Treatment & Non-Discrimination</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-4')">1.4 Data Protection & Privacy</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-5')">1.5 Accountability & Remedy</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">settings</span>
+                        Tier 2: Operational Principles
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier2-1')">2.1 Document Verification Scope</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-2')">2.2 UAE Labor Law Context</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-3')">2.3 Explainability for Workers</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-4')">2.4 Fair Processing & Appeal</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-5')">2.5 Continuous Fairness Monitoring</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-6')">2.6 Biometric Data & Photos</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-7')">2.7 Training Data & Transparency</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-8')">2.8 Integration with Labor Protections</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">rule</span>
+                        Tier 3: Specific Rules
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier3-1')">3.1 Protected Characteristics</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-2')">3.2 Work Permit Type Rules</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-3')">3.3 Escalation Triggers</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-4')">3.4 Interaction Standards</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">analytics</span>
+                        Tier 4: Monitoring & Learning
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier4-1')">4.1 Measurable Accountability</div>
+                    <div class="nav-subitem" onclick="showSection('tier4-2')">4.2 Continuous Improvement</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('tier5')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">gavel</span>
+                        Tier 5: Amendment & Governance
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('rights')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">verified_user</span>
+                        Worker Rights
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('appendix-a')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">menu_book</span>
+                        Appendix A: Key Concepts
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('appendix-b')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">account_balance</span>
+                        Appendix B: Regulatory Framework
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('version')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">history</span>
+                        Version History
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Document Information -->
+            <div id="info" class="section active">
+                <div class="section-header">
+                    <div class="section-title">Document Information</div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Authority</div>
+                        <div class="info-value">Ministry of Human Resources and Emiratisation (MoHRE)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Jurisdiction</div>
+                        <div class="info-value">AI work permit processing throughout UAE</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Primary Regulatory Foundation</div>
+                        <div class="info-value">Federal Decree Law No. 33 of 2021; UAE National AI Strategy 2031</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">System</div>
+                        <div class="info-value">"Eye" - AI Agent for document verification</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Scope</div>
+                        <div class="info-value">1.8M+ current workforce; all 13 work permit types</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Deployment</div>
+                        <div class="info-value">Launched October 2025; phased rollout Q1 2026</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Effective Date</div>
+                        <div class="info-value">January 15, 2026</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Version</div>
+                        <div class="info-value">1.0</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Next Review</div>
+                        <div class="info-value">January 15, 2027</div>
+                    </div>
+                </div>
+                <div class="alert-box info" style="margin-top: 24px;">
+                    <span class="material-icons alert-icon">info</span>
+                    <div>
+                        <strong>Living Document</strong><br>
+                        This constitution applies to the "Eye" AI work permit processing system and any successor systems performing similar functions. It operationalizes Federal Decree Law No. 33 of 2021 (Labour Law) while enabling efficiency gains promised by AI.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 1.1 -->
+            <div id="tier1-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.1: Human Decision Authority & Worker Agency</div>
+                    <div class="section-subtitle">Core values guiding all AI work permit decisions</div>
+                </div>
+                <div class="principle-description">
+                    AI assists permit decisions but never autonomously determines eligibility. Workers retain agency over their employment and residency prospects.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Final work permit decisions are made by authorized MoHRE officers, not by AI system alone</li>
+                    <li class="rule-item">AI recommendations are advisory; MoHRE officers can override without friction or documentation penalty</li>
+                    <li class="rule-item">Workers denied permits receive human review before final rejection</li>
+                    <li class="rule-item">Workers can request human-only assessment without AI involvement</li>
+                    <li class="rule-item">No automatic/algorithmic permit denial; human review required for adverse decisions</li>
+                    <li class="rule-item">Workers retain right to legal counsel and dispute resolution under existing labor law</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.2 -->
+            <div id="tier1-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.2: Transparency Throughout Application Process</div>
+                    <div class="section-subtitle">Core values guiding all AI work permit decisions</div>
+                </div>
+                <div class="principle-description">
+                    Workers have the right to know when AI is used, how it works, and why decisions were made.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Job postings and recruitment materials clearly disclose: "Your work permit application will be assessed using AI document verification"</li>
+                    <li class="rule-item">Workers informed before submitting documents that AI will analyze them</li>
+                    <li class="rule-item">Workers understand what documents are being analyzed and how they affect eligibility</li>
+                    <li class="rule-item">Workers receive clear notification of decision (approval, conditional approval, or denial)</li>
+                    <li class="rule-item">Rejection communications include reason (not AI scores, but human-understandable explanations)</li>
+                    <li class="rule-item">Workers can request explanation of AI assessment upon request</li>
+                    <li class="rule-item">All communications available in worker's home country language (via UAE diplomatic missions, recruitment offices)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.3 -->
+            <div id="tier1-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.3: Fair Treatment & Non-Discrimination</div>
+                    <div class="section-subtitle">Core values guiding all AI work permit decisions</div>
+                </div>
+                <div class="principle-description">
+                    AI assessment cannot discriminate based on nationality, origin, or other protected characteristics. Assessment accuracy must be fair across all worker demographics.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">No AI assessment based on protected characteristics: nationality, country of origin, ethnicity, religion, gender, disability, family status, age (except legal age verification)</li>
+                    <li class="rule-item">No proxy variables for protected characteristics: source country, educational institution name, visa history, accent in video/audio, etc., without documented justification</li>
+                    <li class="rule-item">Approval/advancement rates monitored by: nationality/country of origin, gender, disability status, age group, educational attainment level</li>
+                    <li class="rule-item">If disparity >5% in approval rates between worker groups, trigger investigation and escalation</li>
+                    <li class="rule-item">AI systems tested for bias on diverse worker populations before deployment</li>
+                    <li class="rule-item">Bias testing includes simulation of applications from all nationalities represented in UAE workforce (80+ nationalities)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.4 -->
+            <div id="tier1-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.4: Data Protection & Privacy</div>
+                    <div class="section-subtitle">Core values guiding all AI work permit decisions</div>
+                </div>
+                <div class="principle-description">
+                    Worker personal data protected from misuse and unauthorized secondary uses.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Data collected only for work permit eligibility assessment</li>
+                    <li class="rule-item">Data protected throughout process; access logged and monitored</li>
+                    <li class="rule-item">Workers control secondary uses (data not shared with employers, police, immigration, or other agencies without legal requirement)</li>
+                    <li class="rule-item">Biometric data (photo, fingerprint if collected) collected only with explicit informed consent</li>
+                    <li class="rule-item">No data mining for purposes beyond work permit assessment</li>
+                    <li class="rule-item">Data retention: Permit granted = retain data for permit validity period + 3 years; Permit denied = delete data within 60 days unless worker appeals</li>
+                    <li class="rule-item">Data breaches reported immediately to workers and MoHRE leadership</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.5 -->
+            <div id="tier1-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.5: Accountability & Remedy for Errors</div>
+                    <div class="section-subtitle">Core values guiding all AI work permit decisions</div>
+                </div>
+                <div class="principle-description">
+                    Harms are prevented, detected, and remedied. Workers wronged by AI errors have clear pathways to remedy.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Eye system is auditable and monitored for accuracy and bias continuously</li>
+                    <li class="rule-item">Errors and false rejections tracked, investigated, and reported</li>
+                    <li class="rule-item">Workers can appeal within defined timeline with transparent process</li>
+                    <li class="rule-item">Wronged workers have access to remedy: decision reversal, expedited reprocessing, or compensation for delays</li>
+                    <li class="rule-item">MoHRE responsible for AI system performance; accountability cannot be delegated to vendors</li>
+                    <li class="rule-item">Independent oversight mechanism established for fairness monitoring</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.1 -->
+            <div id="tier2-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.1: Document Verification Scope & Limits</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="data-sources">
+                    <div class="data-column permitted">
+                        <h4>
+                            <span class="material-icons">check_circle</span>
+                            Permitted AI Analysis
+                        </h4>
+                        <ul class="data-list">
+                            <li>Passport/travel document authenticity verification (comparing against issuing country registries)</li>
+                            <li>Document photo quality assessment (clarity, legibility for processing)</li>
+                            <li>Data consistency checking (does name on passport match employment contract? Do dates align?)</li>
+                            <li>Academic credential verification (comparing against university registries)</li>
+                            <li>Health certificate validation (comparing against issuing medical authority)</li>
+                            <li>Background check document review (if legally required permit type)</li>
+                        </ul>
+                    </div>
+                    <div class="data-column prohibited">
+                        <h4>
+                            <span class="material-icons">cancel</span>
+                            Prohibited AI Analysis
+                        </h4>
+                        <ul class="data-list">
+                            <li>Subjective assessment of "employability," "cultural fit," or "suitability" based on credentials</li>
+                            <li>Facial recognition for identity verification (photo used only for data consistency; no facial analysis)</li>
+                            <li>Judgment about quality of educational institution (AI cannot penalize degrees from certain universities/countries)</li>
+                            <li>Assumptions about worker competency based on nationality or origin</li>
+                            <li>Assessment of worker's likelihood to "integrate" or "adapt"</li>
+                            <li>Predictive judgment about worker future performance or retention</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert-box info" style="margin-top: 16px;">
+                    <span class="material-icons alert-icon">info</span>
+                    <div>
+                        <strong>Core Principle</strong><br>
+                        AI analyzes documents for accuracy and authenticity, not suitability or merit.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 2.2 -->
+            <div id="tier2-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.2: UAE Labor Law Context & Fairness</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    AI assessment applies labor law consistently across all worker categories and nationalities.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Federal Decree Law No. 33 of 2021 applies equally to all workers regardless of nationality; AI assessment reflects this principle</li>
+                    <li class="rule-item">Different work permit types have different requirements; AI applies correct eligibility criteria for each type</li>
+                    <li class="rule-item">International credentials recognized; non-UAE education not penalized by AI</li>
+                    <li class="rule-item">Career gaps understood contextually (workers may have gaps due to visa processing, family situations, economic conditions in home country)</li>
+                    <li class="rule-item">Recognize that some nationalities face visa barriers; approval rates monitored by nationality</li>
+                    <li class="rule-item">UAE law prohibits charging workers recruitment fees; AI assessment does not flag applications from workers who may have paid fees</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.3 -->
+            <div id="tier2-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.3: Explainability for Workers & Employers</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Every permit decision explained clearly in language workers/employers understand.
+                </div>
+                
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #2196f3;">person</span>
+                        For Workers
+                    </div>
+                    <div class="alert-box info">
+                        <span class="material-icons alert-icon">info</span>
+                        <div>
+                            <strong>If approved:</strong> "Your documents meet all requirements for [Permit Type]. Your work permit is approved."<br>
+                            <strong>If denied:</strong> "Your application cannot be approved because: [specific reason]. You can appeal within 14 days."<br>
+                            <strong>Not:</strong> "Algorithm score 78/100" or "System determined not suitable"
+                        </div>
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Explanation in English and worker's home country language</li>
+                        <li class="rule-item">Written explanation provided; can request oral explanation via phone/video</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #4caf50;">business</span>
+                        For Employers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Notification of approval with permit number and validity</li>
+                        <li class="rule-item">If denied: Specific reason (e.g., "Passport validation failed," "Educational credential not verified")</li>
+                        <li class="rule-item">Employer can submit updated documents if technical issue (e.g., blurry photo)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 2.4 -->
+            <div id="tier2-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.4: Fair Processing & Appeal Rights</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Workers screened out by AI have opportunity to appeal and receive human review.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Workers can request human review of any Eye decision</li>
+                    <li class="rule-item">Human review completed within 14 days (faster than traditional processing to reduce limbo period)</li>
+                    <li class="rule-item">Appeal filed directly with MoHRE via secure portal, email, or in-person at service centers</li>
+                    <li class="rule-item">Appeal process available without cost to worker</li>
+                    <li class="rule-item">If worker and human reviewer disagree with AI decision, worker's permit is processed</li>
+                    <li class="rule-item">MoHRE officer can override AI recommendation without documentation requirement</li>
+                    <li class="rule-item">Override patterns reviewed monthly (if officers frequently override for certain nationalities/document types, investigate why)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.5 -->
+            <div id="tier2-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.5: Continuous Fairness Monitoring</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Bias in Eye system detected, measured, and corrected immediately.
+                </div>
+                <div class="alert-box warning">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Automatic Escalation</strong><br>
+                        If approval rate disparity exceeds 5% between nationality groups, pause Eye processing until cause is identified.
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">After every 100 applications processed, disaggregate approval rates by: nationality/country of origin, gender, disability status, age group, permit type</li>
+                    <li class="rule-item">If approval rate disparity >5% between nationality groups, flag for investigation</li>
+                    <li class="rule-item">If disparity confirmed, pause Eye processing until cause identified (bias in AI, inconsistent data quality, or legitimate policy difference)</li>
+                    <li class="rule-item">Monthly public reporting: approval rates by nationality, approval rates by gender, overall processing statistics</li>
+                    <li class="rule-item">Quarterly audit: detailed fairness analysis, bias review, system changes</li>
+                    <li class="rule-item">Annual independent audit by external firm with labor law and AI expertise</li>
+                    <li class="rule-item">Public dashboard (on MoHRE website) showing permit processing metrics</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.6 -->
+            <div id="tier2-6" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.6: Biometric Data & Photo Analysis - Specific Protocols</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    If Eye uses facial recognition or photo analysis, strict safeguards apply.
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">block</span>
+                    <div>
+                        <strong>Strictly Prohibited</strong><br>
+                        Facial recognition technology and emotion detection are strictly prohibited.
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    What Photos CAN Be Analyzed For
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Legibility</li>
+                    <li class="rule-item">Presence of required elements (face visible, background)</li>
+                    <li class="rule-item">Basic quality</li>
+                </ul>
+                <div class="rules-header">
+                    <span class="material-icons">block</span>
+                    What Photos CANNOT Be Analyzed For
+                </div>
+                <ul class="rule-list" style="border-left-color: #f44336;">
+                    <li class="rule-item" style="border-left-color: #f44336;">Identity matching (facial recognition)</li>
+                    <li class="rule-item" style="border-left-color: #f44336;">Trustworthiness/honesty</li>
+                    <li class="rule-item" style="border-left-color: #f44336;">Ethnicity, age estimation</li>
+                </ul>
+                <div class="rules-header">
+                    <span class="material-icons">verified_user</span>
+                    Data Protection
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Photo data encrypted and stored separately from worker identity data</li>
+                    <li class="rule-item">Photo deleted after permit decision (retain for validity period if approved, delete within 60 days if denied)</li>
+                    <li class="rule-item">Workers informed: "Your photo will be analyzed for quality and legibility; facial recognition will not be used"</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.7 -->
+            <div id="tier2-7" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.7: Training Data & Model Transparency</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Eye system trained on representative data; limitations disclosed.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">MoHRE discloses: What data was Eye trained on? How many permit applications? From what time period? What nationalities represented?</li>
+                    <li class="rule-item">If Eye accuracy varies by nationality, this disclosed to workers and employers</li>
+                    <li class="rule-item">Testing on diverse worker populations (all major nationalities in UAE) conducted before full deployment</li>
+                    <li class="rule-item">Model accuracy benchmarked: >95% accuracy required for approval recommendations; >98% required for denial recommendations</li>
+                    <li class="rule-item">Accuracy tested separately by nationality; >5% disparity = investigation</li>
+                    <li class="rule-item">Model retraining schedule disclosed (e.g., "Model updated quarterly with new application data")</li>
+                    <li class="rule-item">If third-party vendor provides AI, MoHRE discloses this; vendor liability for errors specified</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.8 -->
+            <div id="tier2-8" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.8: Integration with Existing Labor Protections</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Eye operates within existing UAE labor law framework.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Eye does not replace legal requirements for employment contracts, medical tests, or other statutory elements</li>
+                    <li class="rule-item">Workers retain all rights under Federal Decree Law No. 33 of 2021</li>
+                    <li class="rule-item">Dispute resolution mechanisms unchanged; workers can still file complaints with MoHRE if they believe Eye made error</li>
+                    <li class="rule-item">Workers can file labor complaints within 30 days of breach; MoHRE must address within 14 days or refer to labor court</li>
+                    <li class="rule-item">Eye decision can be contested via same mechanism as traditional permit denial</li>
+                    <li class="rule-item">Workers can still access 24-hour hotline (80084), legal consultation centers (39 Tadbeer centers), and labor dispute resolution system</li>
+                </ul>
+            </div>
+
+            <!-- Tier 3.1 -->
+            <div id="tier3-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.1: Protected Characteristics - ABSOLUTE PROHIBITION</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">block</span>
+                    <div>
+                        <strong>Absolute Prohibition</strong><br>
+                        Do NOT use these factors in AI assessment under any circumstances.
+                    </div>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Nationality or country of origin (assess qualifications, not nationality)</li>
+                    <li class="rule-item">Gender, gender identity, or gender expression</li>
+                    <li class="rule-item">Age (except legal age verification for work eligibility)</li>
+                    <li class="rule-item">Ethnicity, religion, or cultural background</li>
+                    <li class="rule-item">Disability or health status (except legal medical fitness requirements)</li>
+                    <li class="rule-item">Family status, marital status, or number of dependents</li>
+                    <li class="rule-item">Sexual orientation</li>
+                    <li class="rule-item">Immigration or visa history (except compliance with UAE law)</li>
+                </ul>
+                <div class="alert-box warning" style="margin-top: 16px;">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Proxy Variable Test</strong><br>
+                        If removing a variable changes approval rates differently across nationality groups, it's a proxy. Investigate and justify or remove.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 3.2 -->
+            <div id="tier3-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.2: Work Permit Type-Specific Rules</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+
+                <div class="permit-type-card">
+                    <div class="permit-type-name">A. Standard Work Permits</div>
+                    <div style="font-size: 14px; color: #616161; margin-bottom: 12px;">Most common: Recruit from outside UAE; Transfer from other employer</div>
+                    
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        AI Assessment Elements
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Passport valid for minimum permit duration</li>
+                        <li class="rule-item">Education credentials match job requirements (if applicable to permit type)</li>
+                        <li class="rule-item">Medical fitness (if medical certificate required)</li>
+                        <li class="rule-item">No conflicting employment elsewhere</li>
+                    </ul>
+
+                    <div class="rules-header">
+                        <span class="material-icons">block</span>
+                        AI Cannot Assess
+                    </div>
+                    <ul class="rule-list" style="border-left-color: #f44336;">
+                        <li class="rule-item" style="border-left-color: #f44336;">Salary level (not AI decision)</li>
+                        <li class="rule-item" style="border-left-color: #f44336;">Whether employer is legitimate (done by MoHRE officer separately)</li>
+                        <li class="rule-item" style="border-left-color: #f44336;">Whether job "really needs" this worker (Emiratisation decisions made by policy, not AI)</li>
+                        <li class="rule-item" style="border-left-color: #f44336;">Worker appears on prohibited employment list</li>
+                    </ul>
+
+                    <div class="rules-header">
+                        <span class="material-icons">priority_high</span>
+                        Escalation Triggers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Educational credential cannot be verified with issuing institution</li>
+                        <li class="rule-item">Passport data inconsistent with employment contract</li>
+                        <li class="rule-item">Medical certificate missing or invalid</li>
+                        <li class="rule-item">Worker appears on prohibited employment list</li>
+                    </ul>
+                </div>
+
+                <div class="permit-type-card">
+                    <div class="permit-type-name">B. Specialized Permits</div>
+                    <div style="font-size: 14px; color: #616161; margin-bottom: 12px;">Freelancer, Investor, Spouse sponsorship, etc.</div>
+                    
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        Rules
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Different verification requirements for different permit types; AI applies correct criteria</li>
+                        <li class="rule-item">For freelancer visas: Verify business registration where applicable</li>
+                        <li class="rule-item">For investor permits: Verify investment documents (not assess investment viability)</li>
+                        <li class="rule-item">For family sponsorship: Verify relationship documents, not assess relationship quality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.3 -->
+            <div id="tier3-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.3: Escalation Triggers (All Permit Types)</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="principle-description">
+                    Pause Eye processing and escalate to human immediately if any of these conditions are met.
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">priority_high</span>
+                    <div>
+                        <strong>Immediate Escalation Required</strong><br>
+                        When escalating, provide: reason for escalation, documents reviewed, questions needing human judgment, recommendation withheld pending human review.
+                    </div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #f44336;">report_problem</span>
+                        Escalation Conditions
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Fairness violation:</strong> Approval rate disparity >5% detected between nationality groups; evidence of bias (same documents approved for one nationality, rejected for another)</li>
+                        <li class="rule-item"><strong>Verification failure:</strong> Cannot verify credential with issuing institution; document appears forged or altered; data inconsistencies cannot be resolved</li>
+                        <li class="rule-item"><strong>Prohibited data detected:</strong> Someone attempts to use nationality/origin/family status in AI assessment</li>
+                        <li class="rule-item"><strong>Appeal received:</strong> Any worker appeal reviewed by different MoHRE officer</li>
+                        <li class="rule-item"><strong>High uncertainty:</strong> Cannot reach 95%+ confidence in approval recommendation; Cannot reach 98%+ confidence in denial recommendation</li>
+                        <li class="rule-item"><strong>System error:</strong> AI response inconsistent; processing delay unexplained; unusual pattern suggests model degradation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.4 -->
+            <div id="tier3-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.4: Interaction Standards</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #2196f3;">person</span>
+                        With Workers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Clear, respectful communication about application status</li>
+                        <li class="rule-item">Timely notifications (within 3 business days of submission to 14 days for decision)</li>
+                        <li class="rule-item">Professional, culturally sensitive interaction</li>
+                        <li class="rule-item">No shaming or pressure</li>
+                        <li class="rule-item">Explicit appeal rights communicated</li>
+                        <li class="rule-item">Privacy of personal data respected</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #4caf50;">business</span>
+                        With Employers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Clear notification of permit approval/denial</li>
+                        <li class="rule-item">Specific reasons for denial (not AI jargon)</li>
+                        <li class="rule-item">Opportunity to resubmit if technical issue (e.g., poor photo quality)</li>
+                        <li class="rule-item">Support for compliant hiring practices</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #ff9800;">shield</span>
+                        With Immigration/Labor Enforcement
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Coordination with other agencies only as legally required</li>
+                        <li class="rule-item">No data sharing beyond legal mandate</li>
+                        <li class="rule-item">Transparency about what data is shared and why</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 4.1 -->
+            <div id="tier4-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-4">Tier 4</span>
+                    <div class="section-title">4.1: Measurable Accountability</div>
+                    <div class="section-subtitle">Monitoring and learning systems</div>
+                </div>
+                <div class="principle-description">
+                    Performance tracked, transparent, tied to outcomes.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">assessment</span>
+                        Processing Metrics
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Total applications submitted monthly</li>
+                        <li class="rule-item">Applications processed by Eye</li>
+                        <li class="rule-item">Approval rate (disaggregated by nationality, gender, disability status, age group, permit type)</li>
+                        <li class="rule-item">Denial rate with reasons</li>
+                        <li class="rule-item">Appeal rate</li>
+                        <li class="rule-item">Appeal outcomes (% reversed, % upheld, % inconclusive)</li>
+                        <li class="rule-item">Processing time (average days from submission to decision)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">speed</span>
+                        Accuracy Metrics
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Verification success rate (how often can Eye verify documents?)</li>
+                        <li class="rule-item">Error rate (how often does Eye make incorrect assessment?)</li>
+                        <li class="rule-item">Human override rate (how often do MoHRE officers override Eye recommendation?)</li>
+                        <li class="rule-item">Override patterns (which nationalities/document types most frequently overridden?)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">balance</span>
+                        Equity Metrics
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Approval rate disparity by nationality</li>
+                        <li class="rule-item">Approval rate disparity by gender</li>
+                        <li class="rule-item">Approval rate disparity by disability status</li>
+                        <li class="rule-item">Processing time variation by nationality</li>
+                        <li class="rule-item">Appeal rate variation by nationality</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">computer</span>
+                        System Performance
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Uptime/downtime</li>
+                        <li class="rule-item">Average response time</li>
+                        <li class="rule-item">Error messages logged</li>
+                        <li class="rule-item">Model accuracy changes over time</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">public</span>
+                        Reporting Requirements
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Monthly (public dashboard on MoHRE website):</strong> Approval rates by major nationality groups, processing time trends, appeal rate, notable policy changes</li>
+                        <li class="rule-item"><strong>Quarterly:</strong> Detailed fairness audit with disaggregated data, system changes implemented, appeal case reviews, bias analysis</li>
+                        <li class="rule-item"><strong>Annually:</strong> Comprehensive report to Cabinet/Council of Ministers, independent third-party audit, public summary, trend analysis, recommendations</li>
+                        <li class="rule-item"><strong>Public Access:</strong> Real-time dashboard on MoHRE website, data disaggregated by nationality/gender/disability/age, benchmarking, transparency about accuracy limitations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 4.2 -->
+            <div id="tier4-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-4">Tier 4</span>
+                    <div class="section-title">4.2: Continuous Improvement</div>
+                    <div class="section-subtitle">Monitoring and learning systems</div>
+                </div>
+                <div class="principle-description">
+                    Monitoring insights lead to documented improvements tested for fairness before deployment.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">psychology</span>
+                        Improvement Process
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Step 1:</strong> Identify pattern (e.g., "Eye approves fewer applications from workers from Country X for same documents")</li>
+                        <li class="rule-item"><strong>Step 2:</strong> Hypothesize cause (e.g., "Education credentials from Country X's universities harder to verify," "AI trained on historical bias")</li>
+                        <li class="rule-item"><strong>Step 3:</strong> Test improvement with fairness metrics (e.g., "Add alternative verification pathway for Country X credentials; re-test approval rates")</li>
+                        <li class="rule-item"><strong>Step 4:</strong> Evaluate: Fairness improves or stays same = deploy; fairness worsens = reject</li>
+                        <li class="rule-item"><strong>Step 5:</strong> Document all changes, reasoning, results publicly</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">lightbulb</span>
+                        Examples of Improvements
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Adding university verification databases for under-represented countries</li>
+                        <li class="rule-item">Improving photo quality requirements clarity (not rejecting legitimately blurry photos)</li>
+                        <li class="rule-item">Expanding document types accepted for education verification</li>
+                        <li class="rule-item">Retraining model on more recent, diverse application data</li>
+                        <li class="rule-item">Adjusting verification timelines for countries with slower response times</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 5 -->
+            <div id="tier5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-5">Tier 5</span>
+                    <div class="section-title">5.1: Living Document</div>
+                    <div class="section-subtitle">Amendment and governance</div>
+                </div>
+                <div class="principle-description">
+                    Constitution evolves with evidence and stakeholder input.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">event_repeat</span>
+                        Review Cycle
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Continuous monitoring for issues</li>
+                        <li class="rule-item">Quarterly fairness audits</li>
+                        <li class="rule-item">Annual formal review (January)</li>
+                        <li class="rule-item">Emergency review if systematic harm detected</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">how_to_vote</span>
+                        Amendment Process
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Step 1:</strong> Proposal (from MoHRE, worker organizations, employers, civil society, legal advocates)</li>
+                        <li class="rule-item"><strong>Step 2:</strong> Public comment period (30 days; accessible in English and Arabic)</li>
+                        <li class="rule-item"><strong>Step 3:</strong> Committee review (labor law experts, AI experts, worker representatives, employer representatives)</li>
+                        <li class="rule-item"><strong>Step 4:</strong> MoHRE Cabinet approval</li>
+                        <li class="rule-item"><strong>Step 5:</strong> Implementation (60 days for procedural changes, 6-month transition for substantive changes)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">groups</span>
+                        Governance Committee
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Composition:</strong> MoHRE officials, labor law experts, AI experts, worker advocates, employer representatives, civil society</li>
+                        <li class="rule-item">Quarterly meetings</li>
+                        <li class="rule-item">Transparent decision-making (minutes published)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Worker Rights -->
+            <div id="rights" class="section">
+                <div class="section-header">
+                    <div class="section-title">Worker Rights</div>
+                    <div class="section-subtitle">Every worker applying for UAE work permit has these fundamental rights</div>
+                </div>
+                <div class="alert-box info">
+                    <span class="material-icons alert-icon">verified_user</span>
+                    <div>
+                        <strong>Fundamental Rights</strong><br>
+                        These rights are guaranteed to every worker and cannot be waived or limited.
+                    </div>
+                </div>
+                <div class="rights-grid">
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">info</span>
+                            Right to Know
+                        </div>
+                        <div class="right-description">When AI is being used in permit assessment, what AI analyzes, how AI decision affects eligibility, what data is collected and protected</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">balance</span>
+                            Right to Fair Treatment
+                        </div>
+                        <div class="right-description">Assessment based on qualifications and legal requirements, not nationality or origin; equal accuracy of AI across all nationality groups; no discrimination; accommodation for accessibility needs</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">person</span>
+                            Right to Human Review
+                        </div>
+                        <div class="right-description">Request human-only assessment (without AI), get human review if AI denies permit, appeal within 14 days of decision</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">gavel</span>
+                            Right to Appeal
+                        </div>
+                        <div class="right-description">Clear appeal process, free of charge; human review by different MoHRE officer; know outcome of appeal within 14 days; access to legal counsel/advocacy support</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">shield</span>
+                            Right to Privacy
+                        </div>
+                        <div class="right-description">Control over personal data, know how data is used and protected, no secondary uses without consent, data deletion after decision (if applicable)</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">description</span>
+                            Right to Explanation
+                        </div>
+                        <div class="right-description">Clear, plain-language explanation of decision, reason for denial in worker's home country language, opportunity to request additional information</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">build</span>
+                            Right to Remedy
+                        </div>
+                        <div class="right-description">Correction if AI error made, expedited reprocessing if document quality issue, consideration of extenuating circumstances, access to existing MoHRE dispute resolution</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appendix A -->
+            <div id="appendix-a" class="section">
+                <div class="section-header">
+                    <div class="section-title">Appendix A: Key Concepts</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Term</th>
+                                <th>Definition</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>AI Agent</strong></td>
+                                <td>Machine learning system analyzing documents and providing permit recommendations</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Approval Rate</strong></td>
+                                <td>Percentage of applications approved, disaggregated by demographic group</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Disparity</strong></td>
+                                <td>Difference in outcomes >5% between groups</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Appeal</strong></td>
+                                <td>Request for human review of Eye decision</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Override</strong></td>
+                                <td>MoHRE officer choosing different outcome than AI recommended</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Verification</strong></td>
+                                <td>Confirming document authenticity/validity with issuing authority</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Escalation</strong></td>
+                                <td>Pausing Eye processing due to error/concern; involving human</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bias</strong></td>
+                                <td>Systematic difference in AI performance across groups (intentional or not)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Proxy variable</strong></td>
+                                <td>Data that correlates with protected characteristic and should not be used</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Appendix B -->
+            <div id="appendix-b" class="section">
+                <div class="section-header">
+                    <div class="section-title">Appendix B: UAE Regulatory Framework</div>
+                    <div class="section-subtitle">This constitution builds on these existing laws and regulations</div>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item"><strong>Federal Decree Law No. 33 of 2021:</strong> Labour Law regulating employment relationships, work permits, worker protections</li>
+                    <li class="rule-item"><strong>Federal Law No. 10 of 2017:</strong> Domestic Workers Law extending protections to household workers</li>
+                    <li class="rule-item"><strong>UAE National AI Strategy 2031:</strong> High-level commitment to responsible AI</li>
+                    <li class="rule-item"><strong>ILO Conventions:</strong> Nine major conventions ratified by UAE on workers' rights</li>
+                    <li class="rule-item"><strong>Dubai Health Authority AI Policy:</strong> Standards for clinical AI (applicable to worker health screening)</li>
+                    <li class="rule-item"><strong>UAE Vision 2030:</strong> National objectives including worker welfare and smart government</li>
+                </ul>
+            </div>
+
+            <!-- Version History -->
+            <div id="version" class="section">
+                <div class="section-header">
+                    <div class="section-title">Version History</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Version</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>January 15, 2026</td>
+                                <td>1.0</td>
+                                <td>Initial adoption</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert-box info" style="margin-top: 24px;">
+                    <span class="material-icons alert-icon">contact_support</span>
+                    <div>
+                        <strong>Questions or Amendments</strong><br>
+                        For questions or suggested amendments, contact MoHRE Constitution Committee.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item-header, .nav-subitem').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Mark active nav item
+            event.target.classList.add('active');
+            
+            // Scroll to top of content
+            document.querySelector('.content').scrollTop = 0;
+        }
+
+        function toggleNavItem(element) {
+            const navItem = element.parentElement;
+            navItem.classList.toggle('expanded');
+            
+            // Don't trigger section display when clicking parent
+            event.stopPropagation();
+        }
+    </script>
+</body>
+</html>
