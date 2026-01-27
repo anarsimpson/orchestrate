@@ -443,21 +443,9 @@
                 </div>
             </div>
 
-            <a href="ai_credit_constitution.html" class="constitution-link">
-                <div class="constitution-title">
-                    <span class="flag-icon">🇰🇪</span>
-                    AI Credit Assessment - Kenya
-                </div>
-                <div class="constitution-meta">Central Bank of Kenya • Jan 15, 2026</div>
-            </a>
-
-            <a href="canada_ai_employment_constitution.html" class="constitution-link">
-                <div class="constitution-title">
-                    <span class="flag-icon">🇨🇦</span>
-                    AI Employment Screening - Canada
-                </div>
-                <div class="constitution-meta">Ministry of Labour • Jan 15, 2026</div>
-            </a>
+            <div id="sidebar-constitutions">
+                <!-- Constitutions will be populated dynamically from CONSTITUTIONS array -->
+            </div>
 
             <div class="nav-item" style="margin-top: 16px;">
                 <div class="nav-item-header" onclick="showSection('about')">
@@ -497,11 +485,11 @@
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">2</div>
+                        <div class="stat-number" id="stat-constitutions">2</div>
                         <div class="stat-label">Constitutions Published</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">2</div>
+                        <div class="stat-number" id="stat-countries">2</div>
                         <div class="stat-label">Countries Covered</div>
                     </div>
                     <div class="stat-card">
@@ -519,68 +507,8 @@
                     <div class="section-subtitle">Explore our growing library of AI governance frameworks</div>
                 </div>
 
-                <div class="constitution-grid">
-                    <div class="constitution-card">
-                        <div class="constitution-card-header">
-                            <div class="constitution-flag">🇰🇪</div>
-                            <div class="constitution-card-title">
-                                <div class="constitution-card-name">AI Credit Assessment - Kenya</div>
-                                <div class="constitution-card-jurisdiction">Central Bank of Kenya</div>
-                            </div>
-                        </div>
-                        <div class="constitution-card-description">
-                            Comprehensive framework for fair and transparent AI-powered credit assessment in Kenya's financial sector, emphasizing equitable access for underserved populations and protection against discriminatory practices.
-                        </div>
-                        <div class="constitution-card-meta">
-                            <div class="constitution-card-meta-item">
-                                <span class="material-icons" style="font-size: 14px;">event</span>
-                                Jan 15, 2026
-                            </div>
-                            <div class="constitution-card-meta-item">
-                                <span class="material-icons" style="font-size: 14px;">description</span>
-                                Version 1.0
-                            </div>
-                            <div class="constitution-card-meta-item">
-                                <span class="material-icons" style="font-size: 14px;">account_balance</span>
-                                Central Bank
-                            </div>
-                        </div>
-                        <a href="ai_credit_constitution.html" class="constitution-card-link">
-                            View Constitution
-                            <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
-                        </a>
-                    </div>
-
-                    <div class="constitution-card">
-                        <div class="constitution-card-header">
-                            <div class="constitution-flag">🇨🇦</div>
-                            <div class="constitution-card-title">
-                                <div class="constitution-card-name">AI Employment Screening - Canada</div>
-                                <div class="constitution-card-jurisdiction">Ministry of Labour & Human Rights Commission</div>
-                            </div>
-                        </div>
-                        <div class="constitution-card-description">
-                            National standards for AI systems used in employment screening and hiring, ensuring fair treatment, transparency, and candidate rights while maintaining human decision-making authority.
-                        </div>
-                        <div class="constitution-card-meta">
-                            <div class="constitution-card-meta-item">
-                                <span class="material-icons" style="font-size: 14px;">event</span>
-                                Jan 15, 2026
-                            </div>
-                            <div class="constitution-card-meta-item">
-                                <span class="material-icons" style="font-size: 14px;">description</span>
-                                Version 1.0
-                            </div>
-                            <div class="constitution-card-meta-item">
-                                <span class="material-icons" style="font-size: 14px;">work</span>
-                                Labour Ministry
-                            </div>
-                        </div>
-                        <a href="canada_ai_employment_constitution.html" class="constitution-card-link">
-                            View Constitution
-                            <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
-                        </a>
-                    </div>
+                <div class="constitution-grid" id="constitution-grid">
+                    <!-- Constitution cards will be populated dynamically from CONSTITUTIONS array -->
                 </div>
 
                 <div class="alert-box info" style="margin-top: 32px;">
@@ -860,6 +788,102 @@
     </div>
 
     <script>
+        // ============================================================================
+        // CONSTITUTION CONFIGURATION
+        // Add new constitutions to this array to automatically update the site
+        // ============================================================================
+        const CONSTITUTIONS = [
+            {
+                id: 'kenya-credit',
+                name: 'AI Credit Assessment - Kenya',
+                jurisdiction: 'Central Bank of Kenya',
+                flag: '🇰🇪',
+                authority: 'Central Bank',
+                effectiveDate: 'Jan 15, 2026',
+                version: '1.0',
+                filepath: './Constitutions/KenyaLoans.html',
+                description: 'Comprehensive framework for fair and transparent AI-powered credit assessment in Kenya\'s financial sector, emphasizing equitable access for underserved populations and protection against discriminatory practices.'
+            },
+            {
+                id: 'canada-employment',
+                name: 'AI Employment Screening - Canada',
+                jurisdiction: 'Ministry of Labour & Human Rights Commission',
+                flag: '🇨🇦',
+                authority: 'Labour Ministry',
+                effectiveDate: 'Jan 15, 2026',
+                version: '1.0',
+                filepath: './Constitutions/CanadaEmployment.html',
+                description: 'National standards for AI systems used in employment screening and hiring, ensuring fair treatment, transparency, and candidate rights while maintaining human decision-making authority.'
+            }
+            // Add more constitutions here following the same format
+        ];
+        // ============================================================================
+
+        // Dynamically populate constitutions in sidebar
+        function populateSidebar() {
+            const sidebarConstitutions = document.getElementById('sidebar-constitutions');
+            sidebarConstitutions.innerHTML = CONSTITUTIONS.map(const => `
+                <a href="${const.filepath}" class="constitution-link">
+                    <div class="constitution-title">
+                        <span class="flag-icon">${const.flag}</span>
+                        ${const.name}
+                    </div>
+                    <div class="constitution-meta">${const.jurisdiction} • ${const.effectiveDate}</div>
+                </a>
+            `).join('');
+        }
+
+        // Dynamically populate constitution cards in main content
+        function populateConstitutionCards() {
+            const constitutionGrid = document.getElementById('constitution-grid');
+            constitutionGrid.innerHTML = CONSTITUTIONS.map(const => `
+                <div class="constitution-card">
+                    <div class="constitution-card-header">
+                        <div class="constitution-flag">${const.flag}</div>
+                        <div class="constitution-card-title">
+                            <div class="constitution-card-name">${const.name}</div>
+                            <div class="constitution-card-jurisdiction">${const.jurisdiction}</div>
+                        </div>
+                    </div>
+                    <div class="constitution-card-description">
+                        ${const.description}
+                    </div>
+                    <div class="constitution-card-meta">
+                        <div class="constitution-card-meta-item">
+                            <span class="material-icons" style="font-size: 14px;">event</span>
+                            ${const.effectiveDate}
+                        </div>
+                        <div class="constitution-card-meta-item">
+                            <span class="material-icons" style="font-size: 14px;">description</span>
+                            Version ${const.version}
+                        </div>
+                        <div class="constitution-card-meta-item">
+                            <span class="material-icons" style="font-size: 14px;">account_balance</span>
+                            ${const.authority}
+                        </div>
+                    </div>
+                    <a href="${const.filepath}" class="constitution-card-link">
+                        View Constitution
+                        <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        // Update stats
+        function updateStats() {
+            document.getElementById('stat-constitutions').textContent = CONSTITUTIONS.length;
+            const uniqueCountries = new Set(CONSTITUTIONS.map(c => c.flag)).size;
+            document.getElementById('stat-countries').textContent = uniqueCountries;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            populateSidebar();
+            populateConstitutionCards();
+            updateStats();
+        });
+
         function showSection(sectionId) {
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
