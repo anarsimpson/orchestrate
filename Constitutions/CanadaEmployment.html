@@ -1,1 +1,1728 @@
-Canada Employment
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitution for AI Employment Screening & Hiring Systems - Canada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+            color: #212121;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+            color: white;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+
+        .sidebar {
+            width: 340px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            position: sticky;
+            top: 72px;
+            height: calc(100vh - 72px);
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 500;
+            color: #424242;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-item-header {
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .nav-item-header:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-item-header.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: 500;
+        }
+
+        .nav-item-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .nav-item-icon {
+            font-size: 20px;
+            color: #757575;
+        }
+
+        .nav-item-header.active .nav-item-icon {
+            color: #1976d2;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            transition: transform 0.2s;
+            color: #757575;
+        }
+
+        .nav-item.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .nav-subitems {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #fafafa;
+        }
+
+        .nav-item.expanded .nav-subitems {
+            max-height: 2000px;
+        }
+
+        .nav-subitem {
+            padding: 12px 16px 12px 52px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #616161;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-subitem:hover {
+            background: #f5f5f5;
+            border-left-color: #2196f3;
+        }
+
+        .nav-subitem.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: 500;
+            border-left-color: #1976d2;
+        }
+
+        .content {
+            flex: 1;
+            padding: 32px;
+            max-width: 1200px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #757575;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #212121;
+            font-weight: 500;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 32px;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #2196f3;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #1976d2;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #616161;
+        }
+
+        .principle {
+            margin-bottom: 32px;
+        }
+
+        .principle-title {
+            font-size: 20px;
+            color: #424242;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .principle-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #2196f3;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .principle-description {
+            color: #616161;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .rules-header {
+            font-size: 16px;
+            font-weight: 500;
+            color: #424242;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rule-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rule-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: #fafafa;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .rule-item::before {
+            content: "check_circle";
+            font-family: 'Material Icons';
+            color: #4caf50;
+            font-size: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .data-column {
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .data-column.permitted {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+
+        .data-column.prohibited {
+            background: #ffebee;
+            border: 2px solid #f44336;
+        }
+
+        .data-column h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .data-column.permitted h4 {
+            color: #2e7d32;
+        }
+
+        .data-column.prohibited h4 {
+            color: #c62828;
+        }
+
+        .data-list {
+            list-style: none;
+        }
+
+        .data-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .data-list li::before {
+            font-family: 'Material Icons';
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .data-column.permitted .data-list li::before {
+            content: "check";
+            color: #4caf50;
+        }
+
+        .data-column.prohibited .data-list li::before {
+            content: "close";
+            color: #f44336;
+        }
+
+        .alert-box {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box.warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .alert-box.error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+
+        .alert-box.info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            margin-top: 2px;
+        }
+
+        .alert-box.warning .alert-icon {
+            color: #f57c00;
+        }
+
+        .alert-box.error .alert-icon {
+            color: #d32f2f;
+        }
+
+        .alert-box.info .alert-icon {
+            color: #1976d2;
+        }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .right-card {
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .right-title {
+            font-weight: 500;
+            color: #1976d2;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .right-description {
+            font-size: 14px;
+            color: #616161;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #2196f3;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.tier-1 { background: #e3f2fd; color: #1976d2; }
+        .badge.tier-2 { background: #e8f5e9; color: #388e3c; }
+        .badge.tier-3 { background: #fff3e0; color: #f57c00; }
+        .badge.tier-4 { background: #f3e5f5; color: #7b1fa2; }
+        .badge.tier-5 { background: #fce4ec; color: #c2185b; }
+
+        .system-card {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .system-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1976d2;
+            margin-bottom: 8px;
+        }
+
+        .system-examples {
+            font-size: 14px;
+            color: #757575;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content {
+                padding: 16px;
+            }
+
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Constitution for AI Employment Screening & Hiring Systems in Canada</h1>
+        <div class="subtitle">Ministry of Labour / Human Rights Commission • Effective January 15, 2026 • Version 1.0</div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">folder</span>
+                Navigation
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('info')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">info</span>
+                        Document Information
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">stars</span>
+                        Tier 1: Foundational Principles
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier1-1')">1.1 Human Decision-Making & Candidate Agency</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-2')">1.2 Transparency from Application to Hire</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-3')">1.3 Non-Discrimination & Fairness</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-4')">1.4 Data Minimization & Privacy</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-5')">1.5 Accountability & Remedy</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">settings</span>
+                        Tier 2: Operational Principles
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier2-1')">2.1 Data Minimization & Purpose</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-2')">2.2 Canadian Context & Fairness</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-3')">2.3 Explainability for Candidates</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-4')">2.4 Fair Screening & Appeal</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-5')">2.5 Continuous Fairness Monitoring</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-6')">2.6 Video Interview AI - Protocols</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-7')">2.7 Skill Assessment & Testing</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-8')">2.8 Resume Screening - Limits</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-9')">2.9 Predictive Analytics Limits</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">rule</span>
+                        Tier 3: Specific Rules
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier3-1')">3.1 Protected Characteristics</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-2')">3.2 System-Specific Rules</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-3')">3.3 Escalation Triggers</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-4')">3.4 Interaction Standards</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">analytics</span>
+                        Tier 4: Monitoring & Learning
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier4-1')">4.1 Measurable Accountability</div>
+                    <div class="nav-subitem" onclick="showSection('tier4-2')">4.2 Continuous Improvement</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('tier5')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">gavel</span>
+                        Tier 5: Amendment & Governance
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('rights')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">verified_user</span>
+                        Candidate Rights
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('appendix-a')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">menu_book</span>
+                        Appendix A: Key Concepts
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('appendix-b')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">account_balance</span>
+                        Appendix B: Regulatory Framework
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('version')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">history</span>
+                        Version History
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Document Information -->
+            <div id="info" class="section active">
+                <div class="section-header">
+                    <div class="section-title">Document Information</div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Jurisdiction</div>
+                        <div class="info-value">All AI employment screening in Canada</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Primary Regulatory Foundation</div>
+                        <div class="info-value">Ontario ESA amendments (Jan 1, 2026); PIPEDA; CHRA</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Applicable AI Systems</div>
+                        <div class="info-value">ATS, video interviews, skill tests, predictive analytics</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Deployment</div>
+                        <div class="info-value">51% of employers (growing to 68% by 2026)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Effective Date</div>
+                        <div class="info-value">January 15, 2026</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Version</div>
+                        <div class="info-value">1.0</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Next Review</div>
+                        <div class="info-value">January 15, 2027</div>
+                    </div>
+                </div>
+                <div class="alert-box info" style="margin-top: 24px;">
+                    <span class="material-icons alert-icon">info</span>
+                    <div>
+                        <strong>Living Document</strong><br>
+                        This constitution applies to all AI systems used in employment screening, assessment, and hiring. Ontario Employment Standards Act amendments take effect January 1, 2026 requiring AI disclosure. This constitution extends those requirements nationally.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 1.1 -->
+            <div id="tier1-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.1: Human Decision-Making & Candidate Agency</div>
+                    <div class="section-subtitle">Core values that guide all AI employment decisions</div>
+                </div>
+                <div class="principle-description">
+                    AI assists hiring decisions but never replaces human judgment. Candidates retain agency over their employment prospects.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Final hiring decisions are made by humans, not AI systems</li>
+                    <li class="rule-item">AI recommendations are advisory; hiring managers can override without penalty or friction</li>
+                    <li class="rule-item">Candidates receive explanations for rejection or advancement, not just scores</li>
+                    <li class="rule-item">Candidates can request human review of any AI-generated assessment</li>
+                    <li class="rule-item">No automatic/algorithmic hiring or rejection; human involvement required before adverse action</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.2 -->
+            <div id="tier1-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.2: Transparency from Application to Hire</div>
+                    <div class="section-subtitle">Core values that guide all AI employment decisions</div>
+                </div>
+                <div class="principle-description">
+                    Candidates have the right to know when AI is being used, how it works, and why decisions were made.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Job posting clearly discloses all AI use in screening, assessment, and selection (effective January 1, 2026 in Ontario; extend to all provinces)</li>
+                    <li class="rule-item">Disclosure is specific: "We use AI to screen resumes for keywords" is better than vague "We use technology"</li>
+                    <li class="rule-item">Candidates understand what data is being analyzed and how it affects their chances</li>
+                    <li class="rule-item">Candidates who are interviewed receive notification of hiring decision within 45 days (Ontario requirement; extend nationally)</li>
+                    <li class="rule-item">Rejection reasons are communicated (not AI scores, but human-understandable reasons)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.3 -->
+            <div id="tier1-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.3: Non-Discrimination & Fairness</div>
+                    <div class="section-subtitle">Core values that guide all AI employment decisions</div>
+                </div>
+                <div class="principle-description">
+                    AI screening cannot discriminate based on protected grounds. Assessment accuracy must be fair across all demographic groups.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">No AI assessment based on protected characteristics: race, ethnicity, national origin, gender, gender identity, sexual orientation, age, disability, family status, marital status, religion, criminal record</li>
+                    <li class="rule-item">No proxy variables for protected characteristics: location, school names, gaps in employment history, accent in speech analysis, etc. without documented justification</li>
+                    <li class="rule-item">AI cannot assess "culture fit" if that becomes proxy for homogeneity</li>
+                    <li class="rule-item">Approval/advancement rates monitored by: gender, racialized identity, disability status, age group, Indigenous status, immigrant status</li>
+                    <li class="rule-item">If disparity >5% in advancement rates between groups, trigger investigation and escalation</li>
+                    <li class="rule-item">AI systems tested for bias before deployment using representative Canadian data</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.4 -->
+            <div id="tier1-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.4: Data Minimization & Privacy</div>
+                    <div class="section-subtitle">Core values that guide all AI employment decisions</div>
+                </div>
+                <div class="principle-description">
+                    Collect and use only data necessary for fair assessment. Protect candidate privacy throughout process.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Data collected only for legitimate hiring purpose</li>
+                    <li class="rule-item">No secondary uses without explicit consent (e.g., marketing lists, credit checks, background surveillance)</li>
+                    <li class="rule-item">Personal data protected under PIPEDA and provincial privacy laws</li>
+                    <li class="rule-item">Facial recognition in video interviews allowed only with clear disclosure and consent</li>
+                    <li class="rule-item">Audio/video recordings deleted after hiring decision unless legally required to retain</li>
+                    <li class="rule-item">No data sharing with third parties without candidate consent</li>
+                    <li class="rule-item">Candidates can access and correct their data</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.5 -->
+            <div id="tier1-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.5: Accountability & Remedy</div>
+                    <div class="section-subtitle">Core values that guide all AI employment decisions</div>
+                </div>
+                <div class="principle-description">
+                    Candidates harmed by AI screening have pathways to understand what happened and seek remedy.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Employers accountable for hiring decisions, even when AI-assisted</li>
+                    <li class="rule-item">Discrimination complaints under Canadian Human Rights Act apply to AI-assisted decisions</li>
+                    <li class="rule-item">Candidates can request audit of AI assessment applied to them</li>
+                    <li class="rule-item">If candidate disputes decision, human review available without additional barrier</li>
+                    <li class="rule-item">Wronged candidates can seek remedy: explanation, corrected decision, or compensation</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.1 -->
+            <div id="tier2-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.1: Data Minimization & Purpose Limitation</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="data-sources">
+                    <div class="data-column permitted">
+                        <h4>
+                            <span class="material-icons">check_circle</span>
+                            Permitted Data Sources
+                        </h4>
+                        <ul class="data-list">
+                            <li>Resume/application information: work history, skills, education, certifications</li>
+                            <li>Cover letter or submitted statement (if required)</li>
+                            <li>Relevant portfolio or work samples (if requested)</li>
+                            <li>LinkedIn profile (if candidate voluntarily provides)</li>
+                            <li>Video interview responses (to questions asked, not appearance analysis)</li>
+                            <li>Skill assessments directly related to job requirements</li>
+                            <li>References provided by candidate</li>
+                        </ul>
+                    </div>
+                    <div class="data-column prohibited">
+                        <h4>
+                            <span class="material-icons">cancel</span>
+                            Prohibited Data Sources
+                        </h4>
+                        <ul class="data-list">
+                            <li>Facial recognition (appearance, micro-expressions, "honesty signals")</li>
+                            <li>Full-body video analysis (posture, clothing, "professionalism")</li>
+                            <li>Voice/accent analysis beyond language clarity</li>
+                            <li>Social media activity unrelated to job</li>
+                            <li>Credit score or financial status</li>
+                            <li>Health/disability information</li>
+                            <li>Criminal record (except where legally permitted)</li>
+                            <li>Personal relationships or family status</li>
+                            <li>Genetic information</li>
+                            <li>Location tracking or surveillance data</li>
+                            <li>Tone analysis claiming to assess truthfulness/personality</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert-box warning" style="margin-top: 16px;">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Proxy Variable Test</strong><br>
+                        If removing a variable changes advancement rates differently across demographic groups, it's a proxy. Investigate and justify or remove.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 2.2 -->
+            <div id="tier2-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.2: Canadian Context & Fairness</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Hiring assessments account for Canada's diversity, immigration patterns, and regional differences.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">International credentials recognized; don't penalize non-Canadian experience (prohibited as of Jan 1, 2026)</li>
+                    <li class="rule-item">Education from international institutions weighted fairly</li>
+                    <li class="rule-item">Language assessment only if English/French communication directly required for job</li>
+                    <li class="rule-item">Regional differences acknowledged (rural vs. urban, French vs. English speaking)</li>
+                    <li class="rule-item">Career gaps understood contextually (childcare, illness, underemployment, immigration process)</li>
+                    <li class="rule-item">Recognize that "culture fit" can mask exclusion of diverse candidates</li>
+                    <li class="rule-item">AI systems trained on Canadian hiring data, not imported models without validation</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.3 -->
+            <div id="tier2-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.3: Explainability for Candidates</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Every hiring decision involving AI is explained in language candidates understand.
+                </div>
+                <div class="alert-box info">
+                    <span class="material-icons alert-icon">info</span>
+                    <div>
+                        <strong>For Candidates</strong><br>
+                        <strong>If rejected:</strong> "We screened your resume against job requirements and found X, Y, Z skills were not matching the posted role"<br>
+                        <strong>Not:</strong> "Your resume score was 62/100" or "Algorithm found low cultural fit"
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Communication Standards
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">If advancing: Candidate knows they cleared screening and when next step occurs</li>
+                    <li class="rule-item">If withdrawn: Clear reason communicated</li>
+                    <li class="rule-item">Written explanation provided; no need to "decode" AI jargon</li>
+                    <li class="rule-item">Candidates can ask clarifying questions and receive answers</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.4 -->
+            <div id="tier2-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.4: Fair Screening & Appeal</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Candidates screened out by AI have opportunity to appeal and receive human review.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Candidates can request human review of any AI screening decision</li>
+                    <li class="rule-item">Human review completed within 10 business days</li>
+                    <li class="rule-item">Appeal process available without cost or significant friction to candidate</li>
+                    <li class="rule-item">If candidate and human reviewer disagree with AI, candidate advances</li>
+                    <li class="rule-item">Hiring managers can override AI recommendations; overrides documented</li>
+                    <li class="rule-item">Override patterns reviewed monthly (if one manager consistently overrides AI, investigate why—is AI wrong or is manager biased?)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.5 -->
+            <div id="tier2-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.5: Continuous Fairness Monitoring</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Bias in AI hiring systems is detected, measured, and escalated immediately.
+                </div>
+                <div class="alert-box warning">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Automatic Escalation</strong><br>
+                        If advancement rate disparity exceeds 5% between any demographic groups, pause new screening until cause is identified.
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">After every 100 candidates screened, disaggregate advancement rates by: gender, racialized identity, disability status, age group, Indigenous status, immigrant status</li>
+                    <li class="rule-item">If advancement rate disparity >5% between groups, flag for investigation</li>
+                    <li class="rule-item">If disparity confirmed, pause new screening using that AI system until cause identified</li>
+                    <li class="rule-item">Monthly public reporting: advancement rates by demographic group, appeal rates, time-to-hire</li>
+                    <li class="rule-item">Quarterly audit: fairness analysis, bias review, system changes implemented</li>
+                    <li class="rule-item">Annual independent audit by third-party with Canadian employment law expertise</li>
+                    <li class="rule-item">Public dashboard showing hiring metrics (employers with 100+ hires should report)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.6 -->
+            <div id="tier2-6" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.6: Video Interview AI - Specific Protocols</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Video interviews analyzed by AI require additional safeguards.
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">block</span>
+                    <div>
+                        <strong>Strictly Prohibited</strong><br>
+                        Facial recognition and emotion detection are strictly prohibited.
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    What AI Can Assess
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Communication skills (clarity, grammar)</li>
+                    <li class="rule-item">Relevant knowledge</li>
+                    <li class="rule-item">Job-specific responses</li>
+                </ul>
+                <div class="rules-header">
+                    <span class="material-icons">block</span>
+                    What AI Cannot Assess
+                </div>
+                <ul class="rule-list" style="border-left-color: #f44336;">
+                    <li class="rule-item" style="border-left-color: #f44336;">Appearance, clothing</li>
+                    <li class="rule-item" style="border-left-color: #f44336;">Tone/accent</li>
+                    <li class="rule-item" style="border-left-color: #f44336;">Facial expressions, micro-expressions</li>
+                    <li class="rule-item" style="border-left-color: #f44336;">Body language</li>
+                    <li class="rule-item" style="border-left-color: #f44336;">"Honesty signals"</li>
+                </ul>
+                <div class="rules-header">
+                    <span class="material-icons">verified_user</span>
+                    Candidate Protections
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Disclosure clearly states: "Your video interview will be analyzed by AI to assess [specific skills]"</li>
+                    <li class="rule-item">Candidates provided with: question preview, technical requirements, ability to practice</li>
+                    <li class="rule-item">Candidates can request accommodations (lighting, privacy, ASL interpreter, etc.)</li>
+                    <li class="rule-item">Video recorded and available to candidate upon request</li>
+                    <li class="rule-item">If candidate disagrees with AI score, human reviewer watches video without AI scoring</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.7 -->
+            <div id="tier2-7" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.7: Skill Assessment & Testing - AI Roles</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    AI can assist in skill assessment but not replace human judgment.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Skills assessments directly related to job requirements</li>
+                    <li class="rule-item">AI can score technical assessments (coding, calculations, language proficiency) if scoring is transparent</li>
+                    <li class="rule-item">AI cannot assess "cultural fit," "potential," "leadership," or subjective qualities</li>
+                    <li class="rule-item">All candidates take same assessment; no algorithm deciding who gets tested</li>
+                    <li class="rule-item">Candidates can review their assessment and responses</li>
+                    <li class="rule-item">Candidates can retake assessment if contesting score</li>
+                    <li class="rule-item">AI scores are one input; human reviews assessment holistically</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.8 -->
+            <div id="tier2-8" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.8: Resume Screening - Keyword Matching Limits</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    AI resume screening is common but prone to bias. Strict limits apply.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">AI can flag if resume includes required qualifications (degrees, licenses, years of experience as posted)</li>
+                    <li class="rule-item">AI should NOT filter based on: school name, employment gaps, job titles, formatting</li>
+                    <li class="rule-item">Candidates with transferable skills but different job titles should not be auto-rejected</li>
+                    <li class="rule-item">"Years of experience" threshold flexible (5 years ≠ only 5 years; 5+ years includes 3-5)</li>
+                    <li class="rule-item">If AI screening excludes >30% of applicants, human spot-check a sample for false negatives</li>
+                    <li class="rule-item">Candidates who are screened out can request human review of their resume</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.9 -->
+            <div id="tier2-9" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.9: Predictive Analytics Limits</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    AI systems claiming to predict job performance or retention face strict scrutiny.
+                </div>
+                <div class="data-sources">
+                    <div class="data-column prohibited">
+                        <h4>
+                            <span class="material-icons">cancel</span>
+                            Prohibited Predictions
+                        </h4>
+                        <ul class="data-list">
+                            <li>"Cultural fit" (proxy for homogeneity)</li>
+                            <li>"Leadership potential" (unprovable)</li>
+                            <li>Personality traits (Big Five, Myers-Briggs)</li>
+                            <li>Retention probability >1 year (too speculative)</li>
+                        </ul>
+                    </div>
+                    <div class="data-column permitted">
+                        <h4>
+                            <span class="material-icons">check_circle</span>
+                            Allowed Predictions (with caution)
+                        </h4>
+                        <ul class="data-list">
+                            <li>Technical skill mastery (validated test)</li>
+                            <li>Task-specific performance (validated model)</li>
+                            <li>Early attrition risk (within 6 months, high confidence)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Predictive models must be validated on Canadian hiring data; imported models tested before use</li>
+                    <li class="rule-item">Model accuracy must be >75% on Canadian population; if lower, human review required</li>
+                    <li class="rule-item">Accuracy tested separately for each demographic group; >5% disparity triggers investigation</li>
+                    <li class="rule-item">Predictions are probability, not certainty; humans interpret with caution</li>
+                    <li class="rule-item">Candidates informed if AI prediction is driving decisions</li>
+                </ul>
+            </div>
+
+            <!-- Tier 3.1 -->
+            <div id="tier3-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.1: Protected Characteristics - ABSOLUTE PROHIBITION</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">block</span>
+                    <div>
+                        <strong>Absolute Prohibition</strong><br>
+                        Do NOT use or allow AI to consider these factors under any circumstances.
+                    </div>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Gender, gender identity, or gender expression</li>
+                    <li class="rule-item">Age (except legal age verification for employment eligibility)</li>
+                    <li class="rule-item">Race, ethnicity, national origin, skin color, Indigenous status</li>
+                    <li class="rule-item">Religion or religious practice</li>
+                    <li class="rule-item">Disability or health status</li>
+                    <li class="rule-item">Family status, marital status, sexual orientation</li>
+                    <li class="rule-item">Criminal record (except where specifically permitted by law and non-discriminatory)</li>
+                    <li class="rule-item">Immigration status or work visa type (assess ability to work in Canada, not origin)</li>
+                    <li class="rule-item">Pregnancy or intent to have children</li>
+                    <li class="rule-item">Political beliefs or union membership</li>
+                </ul>
+                <div class="alert-box warning" style="margin-top: 16px;">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Proxy Variable Test</strong><br>
+                        If removing a variable changes hiring outcomes differently across demographic groups, it's a proxy. Investigate and justify or remove.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 3.2 -->
+            <div id="tier3-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.2: System-Specific Rules by AI Type</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+
+                <div class="system-card">
+                    <div class="system-name">A. Applicant Tracking System (ATS) - Resume Screening</div>
+                    <div class="system-examples">Examples: Workday, Taleo, LinkedIn Recruiter, Recruiterflow</div>
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        Rules
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Keyword matching for required qualifications only; no filtering on school, employer names, or formatting</li>
+                        <li class="rule-item">Candidates must review what keywords/requirements were used for screening</li>
+                        <li class="rule-item">If >30% of applications filtered out, manual review sample for false negatives</li>
+                        <li class="rule-item">Appeal: Candidate can request human review of ATS decision</li>
+                        <li class="rule-item">Monthly accuracy check: Are qualified candidates being screened out?</li>
+                    </ul>
+                    <div class="rules-header">
+                        <span class="material-icons">priority_high</span>
+                        Escalation Triggers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">High false-negative rate (good candidates filtered out)</li>
+                        <li class="rule-item">Disparity >5% in advancement rates between demographic groups</li>
+                        <li class="rule-item">Keyword bias (e.g., system favoring male-coded language)</li>
+                    </ul>
+                </div>
+
+                <div class="system-card">
+                    <div class="system-name">B. Video Interview AI Analysis</div>
+                    <div class="system-examples">Examples: HireVue, VidCruiter, Interviewer.AI, MyInterview, Ribbon</div>
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        Rules
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">AI assesses: communication clarity, knowledge of subject, relevance of answers to questions asked</li>
+                        <li class="rule-item">AI does NOT assess: facial expressions, micro-expressions, eye contact, smile frequency, clothing, appearance</li>
+                        <li class="rule-item">Candidates receive question preview; can practice</li>
+                        <li class="rule-item">Candidates can request accommodations (lighting, ASL, attendant, accessible location)</li>
+                        <li class="rule-item">Full video recording available to candidate upon request</li>
+                        <li class="rule-item">If candidate disputes AI score, independent human watches video and provides score</li>
+                        <li class="rule-item">Candidates who score low can request live interview with human</li>
+                        <li class="rule-item">AI scoring transparent: "Score based on X factors" not "Algorithm decided"</li>
+                    </ul>
+                    <div class="alert-box error">
+                        <span class="material-icons alert-icon">block</span>
+                        <div>
+                            <strong>Prohibited AI Analysis</strong><br>
+                            Facial recognition (detecting emotions, trustworthiness), micro-expression analysis, tone/accent analysis beyond clarity, body language interpretation, appearance evaluation
+                        </div>
+                    </div>
+                    <div class="rules-header">
+                        <span class="material-icons">priority_high</span>
+                        Escalation Triggers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">High disparity >5% in scores between demographic groups</li>
+                        <li class="rule-item">Candidates reporting AI could not understand their accent or communication style</li>
+                        <li class="rule-item">High override rate by human reviewers (suggests AI scoring poor)</li>
+                        <li class="rule-item">Candidates consistently report AI scoring misses content of their answers</li>
+                    </ul>
+                </div>
+
+                <div class="system-card">
+                    <div class="system-name">C. Skill Assessment & Testing</div>
+                    <div class="system-examples">Examples: iMocha, Codility, Pymetrics, TestGorilla</div>
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        Rules
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Assessment directly tests job-required skills</li>
+                        <li class="rule-item">All candidates take same assessment</li>
+                        <li class="rule-item">Scoring transparent and validated</li>
+                        <li class="rule-item">Candidates can review assessment and results</li>
+                        <li class="rule-item">AI can score objectively (coding correctness, math problems) but not subjective qualities</li>
+                        <li class="rule-item">Cannot assess "potential," "cultural fit," "leadership"</li>
+                    </ul>
+                    <div class="rules-header">
+                        <span class="material-icons">priority_high</span>
+                        Escalation Triggers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Disparity >5% in pass rates between demographic groups</li>
+                        <li class="rule-item">Assessment not validated on Canadian population</li>
+                        <li class="rule-item">High false positive/negative rates</li>
+                    </ul>
+                </div>
+
+                <div class="system-card">
+                    <div class="system-name">D. Predictive Analytics & Machine Learning</div>
+                    <div class="system-examples">Examples: Eightfold AI, Pymetrics, HireEZ</div>
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        Rules
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Model must be transparent: "Trained on X years of Y company hiring data"</li>
+                        <li class="rule-item">If trained on non-Canadian data, must be validated on Canadian population before use</li>
+                        <li class="rule-item">Accuracy threshold: >75% on Canadian population</li>
+                        <li class="rule-item">Accuracy tested separately by demographic group; >5% disparity = investigation</li>
+                        <li class="rule-item">Candidates informed if AI prediction driving decisions</li>
+                        <li class="rule-item">Predictions are inputs, not conclusions; humans decide</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.3 -->
+            <div id="tier3-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.3: Escalation Triggers (All Systems)</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="principle-description">
+                    Pause AI screening and escalate to human immediately if any of these conditions are met.
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">priority_high</span>
+                    <div>
+                        <strong>Immediate Escalation Required</strong><br>
+                        When escalating, provide: reason for escalation, data reviewed, candidate information, questions for human decision-maker, recommendation withheld pending human review.
+                    </div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #f44336;">report_problem</span>
+                        Escalation Conditions
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Fairness violation:</strong> Advancement rate disparity >5% between demographic groups; evidence of disparate impact</li>
+                        <li class="rule-item"><strong>Low confidence:</strong> AI cannot explain decision with 70%+ clarity; multiple overrides for similar profiles</li>
+                        <li class="rule-item"><strong>Prohibited data detected:</strong> Someone attempts to use protected characteristics or proxies in AI system</li>
+                        <li class="rule-item"><strong>Appeal received:</strong> Any candidate appeal reviewed by different human (not original reviewer)</li>
+                        <li class="rule-item"><strong>High error rate:</strong> 10% of candidates flagged as "screened out" successfully appeal to human reviewer</li>
+                        <li class="rule-item"><strong>System degradation:</strong> AI accuracy drops below 75% on Canadian population; accuracy disparity develops between groups</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.4 -->
+            <div id="tier3-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.4: Interaction Standards</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #2196f3;">person</span>
+                        With Candidates
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Clear, plain-language communication about hiring process and AI use</li>
+                        <li class="rule-item">Prompt notification of decisions (within 45 days of interview per Ontario requirement)</li>
+                        <li class="rule-item">Professional, respectful treatment</li>
+                        <li class="rule-item">No shaming or pressure tactics</li>
+                        <li class="rule-item">Explicit appeal rights communicated</li>
+                        <li class="rule-item">Privacy of personal data respected</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #4caf50;">business_center</span>
+                        With Hiring Managers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Clear reasoning for AI recommendations</li>
+                        <li class="rule-item">Acceptance of overrides without friction</li>
+                        <li class="rule-item">Documentation of override rationale</li>
+                        <li class="rule-item">Feedback on AI performance</li>
+                        <li class="rule-item">Training on AI limitations and bias</li>
+                        <li class="rule-item">Support for fair hiring practices</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #ff9800;">apartment</span>
+                        With Employers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Regular reporting on fairness metrics</li>
+                        <li class="rule-item">Transparency about AI system limitations</li>
+                        <li class="rule-item">Compliance with privacy and human rights laws</li>
+                        <li class="rule-item">Accountability for hiring decisions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 4.1 -->
+            <div id="tier4-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-4">Tier 4</span>
+                    <div class="section-title">4.1: Measurable Accountability</div>
+                    <div class="section-subtitle">Monitoring and learning systems</div>
+                </div>
+                <div class="principle-description">
+                    Performance tracked, transparent, and tied to hiring outcomes.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">assessment</span>
+                        Screening Metrics
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Number of applications received</li>
+                        <li class="rule-item">Number screened by AI</li>
+                        <li class="rule-item">Number advancing from AI screening</li>
+                        <li class="rule-item">Advancement rate (disaggregated by gender, racialized identity, disability status, age group, Indigenous status, immigrant status)</li>
+                        <li class="rule-item">Appeal rate (candidates requesting human review of AI decision)</li>
+                        <li class="rule-item">Appeal outcome (% reversed, % upheld)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">work</span>
+                        Hiring Outcomes
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Job offers made</li>
+                        <li class="rule-item">Acceptance rate</li>
+                        <li class="rule-item">Time-to-hire</li>
+                        <li class="rule-item">Turnover rate at 6 months, 1 year (to validate predictive models)</li>
+                        <li class="rule-item">Demographic composition of new hires (compared to applicant pool)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">speed</span>
+                        System Performance
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">AI accuracy on Canadian population</li>
+                        <li class="rule-item">Accuracy disparity across demographic groups</li>
+                        <li class="rule-item">Candidates reporting technical issues, accessibility barriers</li>
+                        <li class="rule-item">Candidates reporting AI decision seemed unfair/wrong</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">balance</span>
+                        Equity Metrics
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Hiring rate by gender, race/ethnicity, disability status, age, immigration status</li>
+                        <li class="rule-item">Pay equity by demographic group (to catch downstream AI wage discrimination)</li>
+                        <li class="rule-item">Promotion rates for AI-hired employees by demographic group</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">public</span>
+                        Reporting Requirements
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Monthly:</strong> Advancement rate by demographic group, appeal rate and outcomes, disparity analysis, notable issues</li>
+                        <li class="rule-item"><strong>Quarterly:</strong> Detailed fairness audit, hiring outcome analysis, system changes implemented, appeal case studies</li>
+                        <li class="rule-item"><strong>Annually:</strong> Comprehensive equity report, independent third-party audit, public summary, trend analysis</li>
+                        <li class="rule-item"><strong>Public Access:</strong> Employers with 100+ annual hires report publicly on hiring diversity; government hiring AI use public</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 4.2 -->
+            <div id="tier4-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-4">Tier 4</span>
+                    <div class="section-title">4.2: Continuous Improvement</div>
+                    <div class="section-subtitle">Monitoring and learning systems</div>
+                </div>
+                <div class="principle-description">
+                    Insights from monitoring lead to documented improvements tested for fairness before deployment.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">psychology</span>
+                        Improvement Process
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Step 1:</strong> Identify pattern (e.g., "AI advances more men than women for engineering roles")</li>
+                        <li class="rule-item"><strong>Step 2:</strong> Hypothesize cause (e.g., "AI keywords favor male-coded language," "Training data had male bias")</li>
+                        <li class="rule-item"><strong>Step 3:</strong> Test improvement with fairness metrics (e.g., "Remove gendered language from keyword list; re-test")</li>
+                        <li class="rule-item"><strong>Step 4:</strong> Evaluate: Fairness improves or stays same = deploy; fairness worsens = reject</li>
+                        <li class="rule-item"><strong>Step 5:</strong> Document all changes, reasons, results publicly</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">lightbulb</span>
+                        Examples of Improvements
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Removing school names from ATS filtering</li>
+                        <li class="rule-item">Adjusting video interview prompts for clarity</li>
+                        <li class="rule-item">Removing accent/tone analysis from video AI</li>
+                        <li class="rule-item">Retraining models on more recent, diverse Canadian hiring data</li>
+                        <li class="rule-item">Updating keyword lists to include alternative job titles</li>
+                        <li class="rule-item">Adding human review step for close calls</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 5 -->
+            <div id="tier5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-5">Tier 5</span>
+                    <div class="section-title">5.1: Living Document</div>
+                    <div class="section-subtitle">Amendment and governance</div>
+                </div>
+                <div class="principle-description">
+                    Constitution evolves with evidence and stakeholder input.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">event_repeat</span>
+                        Review Cycle
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Continuous monitoring for issues</li>
+                        <li class="rule-item">Quarterly fairness audits</li>
+                        <li class="rule-item">Annual formal review (January)</li>
+                        <li class="rule-item">Emergency review if systematic harm detected</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">how_to_vote</span>
+                        Amendment Process
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Step 1:</strong> Proposal (from Ministry of Labour, human rights commissions, employers, candidates, unions, civil society)</li>
+                        <li class="rule-item"><strong>Step 2:</strong> Public comment period (30 days)</li>
+                        <li class="rule-item"><strong>Step 3:</strong> Committee review (employment law experts, HR professionals, candidates, diversity advocates)</li>
+                        <li class="rule-item"><strong>Step 4:</strong> Ministry approval with stakeholder consultation</li>
+                        <li class="rule-item"><strong>Step 5:</strong> Implementation (60 days for standards, 6-month transition for existing systems)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">groups</span>
+                        Governance Committee
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Composition:</strong> Ministry of Labour, human rights commissioners, employment lawyers, HR professionals, candidate advocates, union representatives, diversity/equity experts, employers</li>
+                        <li class="rule-item">Quarterly meetings</li>
+                        <li class="rule-item">Transparent decision-making</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Candidate Rights -->
+            <div id="rights" class="section">
+                <div class="section-header">
+                    <div class="section-title">Candidate Rights</div>
+                    <div class="section-subtitle">Every job seeker in Canada has these fundamental rights</div>
+                </div>
+                <div class="alert-box info">
+                    <span class="material-icons alert-icon">verified_user</span>
+                    <div>
+                        <strong>Fundamental Rights</strong><br>
+                        These rights are guaranteed to every job seeker and cannot be waived or limited.
+                    </div>
+                </div>
+                <div class="rights-grid">
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">info</span>
+                            Right to Know
+                        </div>
+                        <div class="right-description">When AI is being used in hiring process, what AI is assessing, how AI decision affects candidacy, what data is being used</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">balance</span>
+                            Right to Fair Treatment
+                        </div>
+                        <div class="right-description">Assessment based on job-relevant qualifications, not identity; equal accuracy of AI across all demographic groups; no discrimination; accommodation for accessibility needs</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">gavel</span>
+                            Right to Appeal
+                        </div>
+                        <div class="right-description">Request human review of any AI decision, receive review within 10 business days, appeal without cost or penalty, know outcome of appeal</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">shield</span>
+                            Right to Privacy
+                        </div>
+                        <div class="right-description">Know how personal data is used, control secondary uses, request data access and correction, have data deleted, confidentiality of hiring information</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">description</span>
+                            Right to Explanation
+                        </div>
+                        <div class="right-description">Understand why rejected or advanced, receive reasons in plain language, access to AI assessment results upon request, opportunity to respond or rebut</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">build</span>
+                            Right to Remedy
+                        </div>
+                        <div class="right-description">Correction if wronged, explanation of what happened, compensation if harmed, report discrimination to human rights commission</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appendix A -->
+            <div id="appendix-a" class="section">
+                <div class="section-header">
+                    <div class="section-title">Appendix A: Key Concepts Defined</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Term</th>
+                                <th>Definition</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>AI System</strong></td>
+                                <td>Machine learning, algorithm, or automated decision system assessing job applicants</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Screening</strong></td>
+                                <td>Initial filtering of applications before human review</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Assessment</strong></td>
+                                <td>Evaluation of candidate suitability through tests, interviews, or analysis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Selection</strong></td>
+                                <td>Final hiring decision</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Advancement</strong></td>
+                                <td>Moving to next stage of hiring process</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Proxy variable</strong></td>
+                                <td>Data that correlates with protected characteristic and should not be used</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Disparity</strong></td>
+                                <td>Difference in outcomes >5% between demographic groups</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Override</strong></td>
+                                <td>Decision-maker (human) choosing differently than AI recommended</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Appeal</strong></td>
+                                <td>Request for human review of AI decision</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Escalation</strong></td>
+                                <td>Pause AI use and involve human decision-maker due to concern</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Appendix B -->
+            <div id="appendix-b" class="section">
+                <div class="section-header">
+                    <div class="section-title">Appendix B: Canadian Regulatory Framework</div>
+                    <div class="section-subtitle">This constitution builds on these existing laws and regulations</div>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item"><strong>Ontario Employment Standards Act amendments (January 1, 2026):</strong> AI disclosure requirement</li>
+                    <li class="rule-item"><strong>PIPEDA (federal):</strong> Personal information protection and privacy</li>
+                    <li class="rule-item"><strong>Quebec Law 25 (2024):</strong> Enhanced privacy rights including right to human review of automated decisions</li>
+                    <li class="rule-item"><strong>Canadian Human Rights Act:</strong> Prohibition of discrimination</li>
+                    <li class="rule-item"><strong>Provincial human rights codes:</strong> Employment discrimination protections</li>
+                    <li class="rule-item"><strong>Treasury Board Directive on Automated Decision-Making (federal):</strong> Algorithmic impact assessment</li>
+                    <li class="rule-item"><strong>Proposed AIDA (Artificial Intelligence and Data Act):</strong> National AI regulation (not yet in force)</li>
+                </ul>
+            </div>
+
+            <!-- Version History -->
+            <div id="version" class="section">
+                <div class="section-header">
+                    <div class="section-title">Version History</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Version</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>January 15, 2026</td>
+                                <td>1.0</td>
+                                <td>Initial adoption</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert-box info" style="margin-top: 24px;">
+                    <span class="material-icons alert-icon">contact_support</span>
+                    <div>
+                        <strong>Questions or Amendments</strong><br>
+                        For questions or amendments, contact the Ministry of Labour, provincial human rights commissions, or Canadian Labour Congress.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item-header, .nav-subitem').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Mark active nav item
+            event.target.classList.add('active');
+            
+            // Scroll to top of content
+            document.querySelector('.content').scrollTop = 0;
+        }
+
+        function toggleNavItem(element) {
+            const navItem = element.parentElement;
+            navItem.classList.toggle('expanded');
+            
+            // Don't trigger section display when clicking parent
+            event.stopPropagation();
+        }
+    </script>
+</body>
+</html>
