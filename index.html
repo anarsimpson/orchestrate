@@ -821,53 +821,59 @@
 
         // Dynamically populate constitutions in sidebar
         function populateSidebar() {
+            console.log('populateSidebar called, CONSTITUTIONS:', CONSTITUTIONS);
             const sidebarConstitutions = document.getElementById('sidebar-constitutions');
-            sidebarConstitutions.innerHTML = CONSTITUTIONS.map(const => `
-                <a href="${const.filepath}" class="constitution-link">
+            console.log('sidebar element:', sidebarConstitutions);
+            sidebarConstitutions.innerHTML = CONSTITUTIONS.map(c => `
+                <a href="${c.filepath}" class="constitution-link">
                     <div class="constitution-title">
-                        <span class="flag-icon">${const.flag}</span>
-                        ${const.name}
+                        <span class="flag-icon">${c.flag}</span>
+                        ${c.name}
                     </div>
-                    <div class="constitution-meta">${const.jurisdiction} • ${const.effectiveDate}</div>
+                    <div class="constitution-meta">${c.jurisdiction} • ${c.effectiveDate}</div>
                 </a>
             `).join('');
+            console.log('Populated sidebar with', CONSTITUTIONS.length, 'constitutions');
         }
 
         // Dynamically populate constitution cards in main content
         function populateConstitutionCards() {
+            console.log('populateConstitutionCards called');
             const constitutionGrid = document.getElementById('constitution-grid');
-            constitutionGrid.innerHTML = CONSTITUTIONS.map(const => `
+            console.log('grid element:', constitutionGrid);
+            constitutionGrid.innerHTML = CONSTITUTIONS.map(c => `
                 <div class="constitution-card">
                     <div class="constitution-card-header">
-                        <div class="constitution-flag">${const.flag}</div>
+                        <div class="constitution-flag">${c.flag}</div>
                         <div class="constitution-card-title">
-                            <div class="constitution-card-name">${const.name}</div>
-                            <div class="constitution-card-jurisdiction">${const.jurisdiction}</div>
+                            <div class="constitution-card-name">${c.name}</div>
+                            <div class="constitution-card-jurisdiction">${c.jurisdiction}</div>
                         </div>
                     </div>
                     <div class="constitution-card-description">
-                        ${const.description}
+                        ${c.description}
                     </div>
                     <div class="constitution-card-meta">
                         <div class="constitution-card-meta-item">
                             <span class="material-icons" style="font-size: 14px;">event</span>
-                            ${const.effectiveDate}
+                            ${c.effectiveDate}
                         </div>
                         <div class="constitution-card-meta-item">
                             <span class="material-icons" style="font-size: 14px;">description</span>
-                            Version ${const.version}
+                            Version ${c.version}
                         </div>
                         <div class="constitution-card-meta-item">
                             <span class="material-icons" style="font-size: 14px;">account_balance</span>
-                            ${const.authority}
+                            ${c.authority}
                         </div>
                     </div>
-                    <a href="${const.filepath}" class="constitution-card-link">
+                    <a href="${c.filepath}" class="constitution-card-link">
                         View Constitution
                         <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
                     </a>
                 </div>
             `).join('');
+            console.log('Populated grid with', CONSTITUTIONS.length, 'constitution cards');
         }
 
         // Update stats
@@ -879,6 +885,8 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded!');
+            console.log('CONSTITUTIONS array:', CONSTITUTIONS);
             populateSidebar();
             populateConstitutionCards();
             updateStats();
