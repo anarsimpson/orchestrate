@@ -1,1 +1,1682 @@
-x
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitution for AI Healthcare Diagnostic Systems - Japan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+            color: #212121;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+            color: white;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+
+        .sidebar {
+            width: 340px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            position: sticky;
+            top: 72px;
+            height: calc(100vh - 72px);
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 500;
+            color: #424242;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-item-header {
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .nav-item-header:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-item-header.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: 500;
+        }
+
+        .nav-item-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .nav-item-icon {
+            font-size: 20px;
+            color: #757575;
+        }
+
+        .nav-item-header.active .nav-item-icon {
+            color: #1976d2;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            transition: transform 0.2s;
+            color: #757575;
+        }
+
+        .nav-item.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .nav-subitems {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #fafafa;
+        }
+
+        .nav-item.expanded .nav-subitems {
+            max-height: 2000px;
+        }
+
+        .nav-subitem {
+            padding: 12px 16px 12px 52px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #616161;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-subitem:hover {
+            background: #f5f5f5;
+            border-left-color: #2196f3;
+        }
+
+        .nav-subitem.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: 500;
+            border-left-color: #1976d2;
+        }
+
+        .content {
+            flex: 1;
+            padding: 32px;
+            max-width: 1200px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #757575;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #212121;
+            font-weight: 500;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 32px;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #2196f3;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #1976d2;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #616161;
+        }
+
+        .principle {
+            margin-bottom: 32px;
+        }
+
+        .principle-title {
+            font-size: 20px;
+            color: #424242;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .principle-description {
+            color: #616161;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .rules-header {
+            font-size: 16px;
+            font-weight: 500;
+            color: #424242;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rule-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rule-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: #fafafa;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .rule-item::before {
+            content: "check_circle";
+            font-family: 'Material Icons';
+            color: #4caf50;
+            font-size: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .data-column {
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .data-column.permitted {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+
+        .data-column.prohibited {
+            background: #ffebee;
+            border: 2px solid #f44336;
+        }
+
+        .data-column h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .data-column.permitted h4 {
+            color: #2e7d32;
+        }
+
+        .data-column.prohibited h4 {
+            color: #c62828;
+        }
+
+        .data-list {
+            list-style: none;
+        }
+
+        .data-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .data-list li::before {
+            font-family: 'Material Icons';
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .data-column.permitted .data-list li::before {
+            content: "check";
+            color: #4caf50;
+        }
+
+        .data-column.prohibited .data-list li::before {
+            content: "close";
+            color: #f44336;
+        }
+
+        .alert-box {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box.warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .alert-box.error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+
+        .alert-box.info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            margin-top: 2px;
+        }
+
+        .alert-box.warning .alert-icon {
+            color: #f57c00;
+        }
+
+        .alert-box.error .alert-icon {
+            color: #d32f2f;
+        }
+
+        .alert-box.info .alert-icon {
+            color: #1976d2;
+        }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .right-card {
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .right-title {
+            font-weight: 500;
+            color: #1976d2;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .right-description {
+            font-size: 14px;
+            color: #616161;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #2196f3;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.tier-1 { background: #e3f2fd; color: #1976d2; }
+        .badge.tier-2 { background: #e8f5e9; color: #388e3c; }
+        .badge.tier-3 { background: #fff3e0; color: #f57c00; }
+        .badge.tier-4 { background: #f3e5f5; color: #7b1fa2; }
+        .badge.tier-5 { background: #fce4ec; color: #c2185b; }
+
+        .system-card {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .system-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1976d2;
+            margin-bottom: 8px;
+        }
+
+        .system-description {
+            font-size: 14px;
+            color: #616161;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content {
+                padding: 16px;
+            }
+
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Constitution for AI Healthcare Diagnostic Systems in Japan</h1>
+        <div class="subtitle">Ministry of Health, Labour and Welfare / PMDA • Effective January 15, 2026 • Version 1.0</div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">folder</span>
+                Navigation
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('info')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">info</span>
+                        Document Information
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">stars</span>
+                        Tier 1: Foundational Principles
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier1-1')">1.1 Patient Agency & Clinical Authority</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-2')">1.2 Transparency for Patients</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-3')">1.3 Accuracy & Fairness Across Ages</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-4')">1.4 Equity in Access & Care</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-5')">1.5 Data Protection & Privacy</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-6')">1.6 Accountability & Remedy</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">settings</span>
+                        Tier 2: Operational Principles
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier2-1')">2.1 Data Sources</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-2')">2.2 Japanese Healthcare Context</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-3')">2.3 Explainability for Patients</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-4')">2.4 Special Protections - Vulnerable</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-5')">2.5 Continuous Fairness Monitoring</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-6')">2.6 Rural & Urban Equity</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-7')">2.7 Training Data Transparency</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-8')">2.8 Integration with Medical System</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">rule</span>
+                        Tier 3: Specific Rules
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier3-1')">3.1 Age-Based Protections</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-2')">3.2 System-Specific Rules</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-3')">3.3 Escalation Triggers</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-4')">3.4 Interaction Standards</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">analytics</span>
+                        Tier 4: Monitoring & Learning
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier4-1')">4.1 Measurable Accountability</div>
+                    <div class="nav-subitem" onclick="showSection('tier4-2')">4.2 Continuous Improvement</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('tier5')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">gavel</span>
+                        Tier 5: Amendment & Governance
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('rights')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">verified_user</span>
+                        Patient Rights
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('appendix-a')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">menu_book</span>
+                        Appendix A: Key Concepts
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('appendix-b')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">account_balance</span>
+                        Appendix B: Regulatory Framework
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('version')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">history</span>
+                        Version History
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Document Information -->
+            <div id="info" class="section active">
+                <div class="section-header">
+                    <div class="section-title">Document Information</div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Authority</div>
+                        <div class="info-value">Ministry of Health, Labour and Welfare (MHLW); PMDA</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Jurisdiction</div>
+                        <div class="info-value">All AI diagnostic systems in Japanese healthcare facilities</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Applicable Regulations</div>
+                        <div class="info-value">PAL, APPI, AI Promotion Act (June 4, 2025)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Systems In Scope</div>
+                        <div class="info-value">EndoBRAIN, Nodoca, AIM, Fujifilm NURA, all SaMD diagnostic AI</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Population Context</div>
+                        <div class="info-value">36.24M people 65+ (29.3% of population)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Effective Date</div>
+                        <div class="info-value">January 15, 2026</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Version</div>
+                        <div class="info-value">1.0</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Next Review</div>
+                        <div class="info-value">January 15, 2027</div>
+                    </div>
+                </div>
+                <div class="alert-box info" style="margin-top: 24px;">
+                    <span class="material-icons alert-icon">info</span>
+                    <div>
+                        <strong>Living Document</strong><br>
+                        This constitution applies to all AI diagnostic systems in Japanese healthcare. Special emphasis on elderly patients (65+, particularly 75+) reflects demographic reality: they are both largest users of healthcare and most vulnerable to algorithmic bias.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 1.1 -->
+            <div id="tier1-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.1: Patient Agency & Clinical Authority</div>
+                    <div class="section-subtitle">Core values guiding all AI diagnostic decisions</div>
+                </div>
+                <div class="principle-description">
+                    AI supports clinician decision-making but never replaces the physician's judgment. Patients retain agency over their diagnosis and treatment.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Final diagnostic decisions rest with the attending physician, not the AI system</li>
+                    <li class="rule-item">AI recommendations are advisory; physicians can override without friction or documentation penalty</li>
+                    <li class="rule-item">Patients can request physician-only diagnosis without AI involvement</li>
+                    <li class="rule-item">Elderly patients (65+) specifically have right to human-only assessment if preferred</li>
+                    <li class="rule-item">No autonomous/algorithmic diagnosis; human physician review required before any diagnosis communicated to patient</li>
+                    <li class="rule-item">Physicians retain full responsibility and accountability for diagnosis, regardless of AI involvement</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.2 -->
+            <div id="tier1-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.2: Transparency Appropriate to Patient Age & Health Literacy</div>
+                    <div class="section-subtitle">Core values guiding all AI diagnostic decisions</div>
+                </div>
+                <div class="principle-description">
+                    Patients understand when AI is being used, how it works, and why recommendations were made. Special protections for elderly and vulnerable patients.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Patients informed before AI analysis of their medical data (via consent form or verbal explanation in accessible language)</li>
+                    <li class="rule-item">Explanation available in plain Japanese, with visual aids for patients with low health literacy</li>
+                    <li class="rule-item">For patients 75+: In-person explanation preferred over written consent (addresses literacy and digital access gaps)</li>
+                    <li class="rule-item">Explanation includes: what AI is analyzing, what it's good at, what it's not good at, and what happens next</li>
+                    <li class="rule-item">Patients can ask questions and receive clear answers before proceeding</li>
+                    <li class="rule-item">For patients with family caregivers: Caregivers can receive explanations and support informed consent</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.3 -->
+            <div id="tier1-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.3: Accuracy & Fairness Across Age Groups</div>
+                    <div class="section-subtitle">Core values guiding all AI diagnostic decisions</div>
+                </div>
+                <div class="principle-description">
+                    AI diagnostic accuracy must be fair across all patient age groups, with special focus on elderly patients who use healthcare most.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Diagnostic accuracy monitored and reported separately for age groups: <40, 40-64, 65-74, 75+</li>
+                    <li class="rule-item">If accuracy disparity >5% between age groups, trigger investigation and escalation</li>
+                    <li class="rule-item">AI systems specifically tested on elderly (65+) patient populations before deployment to general population</li>
+                    <li class="rule-item">Elderly patients (65+) cannot be systematically disadvantaged by AI recommendations</li>
+                    <li class="rule-item">Fairness also monitored by: gender, prefecture (rural vs. urban), socioeconomic status (insurance type)</li>
+                    <li class="rule-item">If accuracy varies significantly by rural vs. urban settings, adjust deployment or add human review in underperforming regions</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.4 -->
+            <div id="tier1-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.4: Equity in Access & Care</div>
+                    <div class="section-subtitle">Core values guiding all AI diagnostic decisions</div>
+                </div>
+                <div class="principle-description">
+                    AI diagnostic systems deployed equitably across Japan, with particular attention to rural prefectures with specialist shortages.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">AI systems not restricted to urban tertiary care centers; deployed to rural clinics where specialist shortages are acute</li>
+                    <li class="rule-item">Rural healthcare facilities receive same quality AI support as urban hospitals</li>
+                    <li class="rule-item">Rural patients do not experience diagnostic delays due to AI system unavailability</li>
+                    <li class="rule-item">Accessible for patients with disabilities (visual, hearing, mobility) with appropriate accommodations</li>
+                    <li class="rule-item">Systems work reliably with limited internet connectivity (critical for rural Japan)</li>
+                    <li class="rule-item">Trained physician or nurse available to assist elderly patients in using AI-supported diagnosis</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.5 -->
+            <div id="tier1-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.5: Data Protection & Privacy</div>
+                    <div class="section-subtitle">Core values guiding all AI diagnostic decisions</div>
+                </div>
+                <div class="principle-description">
+                    Patient health data protected from misuse and inappropriate secondary uses. Compliance with APPI and international standards.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Patient data collected only for diagnostic purposes; no secondary mining without explicit consent</li>
+                    <li class="rule-item">Data encrypted at rest and in transit; access logged and audited</li>
+                    <li class="rule-item">Patients control secondary uses (research, AI model improvement, epidemiological studies)</li>
+                    <li class="rule-item">Data retention: if diagnosis made, retain for clinical record duration; if diagnosis not made/data unused, delete within 90 days</li>
+                    <li class="rule-item">Patient right to access their data, request corrections, and demand deletion (except legal holds)</li>
+                    <li class="rule-item">Data breaches reported to patients within 72 hours; regulatory notification to APPI commission mandatory</li>
+                    <li class="rule-item">Cross-border data transfers (to vendors outside Japan) prohibited without explicit patient consent and regulatory approval</li>
+                </ul>
+            </div>
+
+            <!-- Tier 1.6 -->
+            <div id="tier1-6" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.6: Accountability & Remedy</div>
+                    <div class="section-subtitle">Core values guiding all AI diagnostic decisions</div>
+                </div>
+                <div class="principle-description">
+                    Diagnostic errors are detected, investigated, and remedied. Patients harmed by AI errors have clear pathways to recourse.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">All diagnostic AI systems audited continuously for accuracy and bias</li>
+                    <li class="rule-item">Diagnostic errors, adverse events, and false negatives tracked and investigated</li>
+                    <li class="rule-item">Patients can appeal or request second opinion on any AI-supported diagnosis</li>
+                    <li class="rule-item">Wronged patients have access to remedy: diagnosis correction, expedited specialist review, or compensation</li>
+                    <li class="rule-item">MHLW/PMDA responsible for AI system oversight; accountability cannot be delegated to vendors</li>
+                    <li class="rule-item">Public adverse event reporting system created; clinicians and patients can report concerns</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.1 -->
+            <div id="tier2-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.1: Data Sources - Diagnostic Appropriateness</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Use only data clinically relevant to specific diagnosis. Protect against proxy discrimination.
+                </div>
+                <div class="data-sources">
+                    <div class="data-column permitted">
+                        <h4>
+                            <span class="material-icons">check_circle</span>
+                            Permitted Data Sources
+                        </h4>
+                        <ul class="data-list">
+                            <li>Medical imaging (endoscopy, CT, ultrasound, X-ray, ECG, etc.)</li>
+                            <li>Patient history (medical, family, medication, allergies)</li>
+                            <li>Vital signs and laboratory results</li>
+                            <li>Current symptoms and clinical signs documented by physician</li>
+                            <li>Age (when clinically relevant to diagnosis)</li>
+                        </ul>
+                    </div>
+                    <div class="data-column prohibited">
+                        <h4>
+                            <span class="material-icons">cancel</span>
+                            Prohibited Data Sources
+                        </h4>
+                        <ul class="data-list">
+                            <li>Socioeconomic status or insurance type (never influences diagnostic assessment)</li>
+                            <li>Residential address (except for epidemiological context, not diagnostic)</li>
+                            <li>Occupation or work status</li>
+                            <li>Immigration or visa status</li>
+                            <li>Family structure or living situation</li>
+                            <li>Lifestyle factors unrelated to presenting illness</li>
+                            <li>Previous psychiatric history (unless directly relevant to current diagnosis)</li>
+                            <li>Criminal history</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert-box warning" style="margin-top: 16px;">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Proxy Variable Test</strong><br>
+                        If removing a variable changes diagnostic accuracy differently across age groups or prefectures, it's a proxy. Investigate and justify or remove.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier 2.2 -->
+            <div id="tier2-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.2: Japanese Healthcare Context & Elderly-Specific Fairness</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    AI assessment reflects Japanese healthcare system design, aging population needs, and regional variations.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">AI systems understand Japanese disease patterns and risk factors (different disease prevalence than Western populations AI was often trained on)</li>
+                    <li class="rule-item">Elderly-specific disease presentations recognized and accommodated (polypharmacy, multiple comorbidities, atypical presentations common in 75+)</li>
+                    <li class="rule-item">Kanji/Japanese language in medical terms properly processed (AI trained on Japanese clinical terminology and handwriting)</li>
+                    <li class="rule-item">Rural vs. urban disease patterns understood (endemic diseases, occupational exposures vary by prefecture)</li>
+                    <li class="rule-item">Low-income elderly patients' treatment options acknowledged (cost of intervention affects clinical decision-making)</li>
+                    <li class="rule-item">Community-based care model respected (AI recommendations compatible with local care coordinators, municipal health workers)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.3 -->
+            <div id="tier2-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.3: Explainability for Elderly Patients & Physicians</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Every diagnostic recommendation explained clearly for different audiences.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #2196f3;">elderly</span>
+                        For Patients (especially 75+)
+                    </div>
+                    <div class="alert-box info">
+                        <span class="material-icons alert-icon">info</span>
+                        <div>
+                            <strong>Good explanation:</strong> "The X-ray shows something that could be early pneumonia. We want to monitor you closely and may give you antibiotics. We'll check again in 2-3 days."<br><br>
+                            <strong>Not:</strong> "Algorithm score 87/100" or "Neural network confidence 0.94"
+                        </div>
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Explanation in simple Japanese, avoiding medical jargon or with jargon explained</li>
+                        <li class="rule-item">Verbal explanation preferred for elderly; written materials as supplement</li>
+                        <li class="rule-item">Explanation includes: what AI found, why it matters, what happens next, what patient should do</li>
+                        <li class="rule-item">Time for questions; no pressure to decide immediately</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #4caf50;">medical_services</span>
+                        For Physicians
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Recommendation includes confidence score (0-100%); if <70%, escalate for senior physician review</li>
+                        <li class="rule-item">Explanation includes: primary findings, alternative diagnoses, supporting data, conflicting data, next diagnostic steps</li>
+                        <li class="rule-item">Evidence base referenced where possible</li>
+                        <li class="rule-item">Reasoning transparent: "This pattern matches X disease because Y was positive and Z was elevated"</li>
+                        <li class="rule-item">Limitations disclosed: "This system trained primarily on endoscopy images from patients aged 50-75; accuracy may differ for younger/older patients"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 2.4 -->
+            <div id="tier2-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.4: Special Protections for Vulnerable Populations</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Elderly, disabled, and low-literacy patients receive additional safeguards.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Patients 75+ have right to family member or advocate present during AI-related discussions</li>
+                    <li class="rule-item">Patients with cognitive impairment (dementia, delirium) require surrogate decision-maker or guardian for AI-supported diagnosis</li>
+                    <li class="rule-item">Patients with hearing impairment receive interpretation or written explanation; visual impairment accommodated with verbal explanation</li>
+                    <li class="rule-item">Low-literacy patients never pressured to consent; assessment by physician or nurse regarding understanding required</li>
+                    <li class="rule-item">Patients with language barriers (foreign residents, linguistic minorities) receive interpretation in their language</li>
+                    <li class="rule-item">No algorithm-driven triage that disadvantages elderly or disabled (older age is not reason to deprioritize care)</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.5 -->
+            <div id="tier2-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.5: Continuous Fairness Monitoring for Age & Geography</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    Bias detected and corrected immediately, with emphasis on elderly populations.
+                </div>
+                <div class="alert-box warning">
+                    <span class="material-icons alert-icon">warning</span>
+                    <div>
+                        <strong>Automatic Escalation</strong><br>
+                        If elderly (75+) patients systematically getting lower accuracy diagnoses, pause system until cause identified.
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">After every 50 diagnoses using AI, disaggregate accuracy by age group: <40, 40-64, 65-74, 75+</li>
+                    <li class="rule-item">If accuracy disparity >5% between age groups, flag for investigation immediately</li>
+                    <li class="rule-item">Additional monitoring by: gender, prefecture, insurance type, disability status</li>
+                    <li class="rule-item">If elderly (75+) patients systematically getting lower accuracy diagnoses, pause system until cause identified</li>
+                    <li class="rule-item">Monthly public reporting: accuracy by age group, disparity analysis, appeal outcomes</li>
+                    <li class="rule-item">Quarterly equity audit examining outcomes by demographics</li>
+                    <li class="rule-item">Annual independent audit by external clinical and AI ethics experts</li>
+                    <li class="rule-item">Public transparency: accuracy metrics published on MHLW/PMDA website disaggregated by system and demographic group</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.6 -->
+            <div id="tier2-6" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.6: Rural & Urban Equity</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    AI systems perform equitably across Japan's diverse geography.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Accuracy tested separately for urban centers vs. rural prefectures before deployment</li>
+                    <li class="rule-item">If accuracy disparity >5% between rural and urban, adjust system or add human review for lower-performing region</li>
+                    <li class="rule-item">Rural clinics receive same level of AI support and technical assistance as urban hospitals</li>
+                    <li class="rule-item">System reliability in areas with limited connectivity (critical for rural Japan) tested and guaranteed</li>
+                    <li class="rule-item">Training and support provided for rural healthcare workers unfamiliar with AI systems</li>
+                    <li class="rule-item">No delay in diagnosis due to rural location or internet connectivity issues</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.7 -->
+            <div id="tier2-7" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.7: Training Data Transparency & Elderly Representation</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    AI models transparent about training data; accountability for elderly-specific accuracy.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">PMDA disclosure requirements for SaMD include: Training data source, patient demographics in training set, accuracy by age group in training data</li>
+                    <li class="rule-item">If model trained primarily on younger/middle-aged patients, this limitation disclosed to elderly patients</li>
+                    <li class="rule-item">AI systems tested on elderly (65+) patient cohorts before deployment to general population; results published</li>
+                    <li class="rule-item">If elderly accuracy is lower, system either: (a) improved before deployment, (b) deployed with mandatory human review for elderly patients, or (c) not deployed</li>
+                    <li class="rule-item">Model retraining on Japanese patient data conducted quarterly; improvements documented</li>
+                    <li class="rule-item">Vendor responsible for ongoing accuracy monitoring; failures reported to PMDA</li>
+                </ul>
+            </div>
+
+            <!-- Tier 2.8 -->
+            <div id="tier2-8" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.8: Integration with Japanese Medical System</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
+                </div>
+                <div class="principle-description">
+                    AI operates within existing medical law, clinical guidelines, and professional standards.
+                </div>
+                <div class="rules-header">
+                    <span class="material-icons">checklist</span>
+                    Rules
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">AI complies with Japanese Clinical Practice Guidelines (if guideline exists for condition)</li>
+                    <li class="rule-item">AI recommendations do not override established medical law or professional standards</li>
+                    <li class="rule-item">Physician can always depart from AI recommendation; departure documented but does not trigger penalty</li>
+                    <li class="rule-item">AI works within Japanese medical licensing and accountability structure (physician remains accountable)</li>
+                    <li class="rule-item">Integration with national medical records system (EHR) supports, not disrupts, clinical workflow</li>
+                    <li class="rule-item">AI assists informed consent process but does not replace physician-patient discussion</li>
+                </ul>
+            </div>
+
+            <!-- Tier 3.1 -->
+            <div id="tier3-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.1: Age-Based Protections - ABSOLUTE PRIORITY</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="alert-box info">
+                    <span class="material-icons alert-icon">info</span>
+                    <div>
+                        <strong>Special Protections for Patients 75+</strong><br>
+                        These safeguards reflect the vulnerability and healthcare needs of Japan's oldest population.
+                    </div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #2196f3;">verified_user</span>
+                        Required Safeguards
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">In-person explanation of AI involvement (not online-only consent)</li>
+                        <li class="rule-item">Family member or advocate may be present</li>
+                        <li class="rule-item">Physician verbally confirms patient understanding before proceeding</li>
+                        <li class="rule-item">For cognitively intact elderly: written consent in large, clear font</li>
+                        <li class="rule-item">For elderly with cognitive impairment: guardian/surrogate decision-maker required</li>
+                        <li class="rule-item">Follow-up confirmation that patient still consents before diagnosis shared</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #f44336;">block</span>
+                        No Age-Based Discrimination
+                    </div>
+                    <ul class="rule-list" style="border-left-color: #f44336;">
+                        <li class="rule-item" style="border-left-color: #f44336;">Age 75+ is never reason to recommend less intensive care or diagnostic workup</li>
+                        <li class="rule-item" style="border-left-color: #f44336;">Elderly patients receive same diagnostic rigor as younger patients</li>
+                        <li class="rule-item" style="border-left-color: #f44336;">Frailty may modify treatment but not diagnosis</li>
+                        <li class="rule-item" style="border-left-color: #f44336;">Algorithm cannot deprioritize elderly patients or route them to lower-resource pathways based on age alone</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.2 -->
+            <div id="tier3-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.2: System-Specific Rules by AI Type</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+
+                <div class="system-card">
+                    <div class="system-name">A. Endoscopy AI (EndoBRAIN, AIM - Colorectal/Gastric Lesion Detection)</div>
+                    <div class="system-description">Trigger for Use: Endoscopy ordered by physician; Patient consented to AI analysis</div>
+                    
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        Rules
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">AI assists lesion detection; does not make diagnostic decision</li>
+                        <li class="rule-item">Physician reviews AI-flagged areas independently before clinical assessment</li>
+                        <li class="rule-item">Heatmaps and confidence scores visible to physician; not automatically shown to patient</li>
+                        <li class="rule-item">If AI and physician disagree about lesion, both findings documented and discussed with patient</li>
+                        <li class="rule-item">Physician's clinical judgment overrides AI assessment</li>
+                        <li class="rule-item">If AI misses lesion that physician finds, documented as learning case</li>
+                    </ul>
+
+                    <div class="rules-header">
+                        <span class="material-icons">elderly</span>
+                        Special Elderly Considerations
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Procedure time monitored (lengthy endoscopy more risky in very elderly)</li>
+                        <li class="rule-item">AI-assisted procedure does not extend procedure time excessively</li>
+                        <li class="rule-item">Sedation/anesthesia risks discussed separately from AI involvement</li>
+                        <li class="rule-item">Patient can request procedure without AI if concerned</li>
+                    </ul>
+
+                    <div class="rules-header">
+                        <span class="material-icons">priority_high</span>
+                        Escalation Triggers
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">AI and physician disagree on >5% of procedures</li>
+                        <li class="rule-item">Same lesion type repeatedly missed by AI</li>
+                        <li class="rule-item">Patient reports discomfort or concern about AI-assisted procedure</li>
+                        <li class="rule-item">Adverse event related to AI-detected area</li>
+                    </ul>
+                </div>
+
+                <div class="system-card">
+                    <div class="system-name">B. Screening AI (Nodoca - Influenza; Fujifilm NURA - Cancer Screening)</div>
+                    <div class="system-description">Trigger for Use: Screening test ordered by patient or healthcare facility; Informed consent obtained</div>
+                    
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        Rules
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">AI provides preliminary assessment; physician or trained clinician confirms before result given to patient</li>
+                        <li class="rule-item">Result includes confidence level (e.g., "Probable influenza, 87% confidence")</li>
+                        <li class="rule-item">If low confidence (<70%), physician assessment required before communicating result</li>
+                        <li class="rule-item">False positive rate monitored and reported (are healthy people being unnecessarily treated?)</li>
+                        <li class="rule-item">For cancer screening: positive results always require physician review before patient notification</li>
+                        <li class="rule-item">Screening results in patient's language and comprehension level</li>
+                    </ul>
+
+                    <div class="rules-header">
+                        <span class="material-icons">elderly</span>
+                        Elderly-Specific
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Screening recommendations reflect elderly-specific risk/benefit (over-screening harms elderly; under-screening missed disease)</li>
+                        <li class="rule-item">Screening frequency adjusted for life expectancy and functional status discussions with physician</li>
+                    </ul>
+                </div>
+
+                <div class="system-card">
+                    <div class="system-name">C. Preventive Health AI (Wearable AFib Detection, Chronic Disease Risk)</div>
+                    <div class="system-description">Trigger for Use: Patient consents to monitoring; Data collected via wearable or home-based monitoring</div>
+                    
+                    <div class="rules-header">
+                        <span class="material-icons">checklist</span>
+                        Rules
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Patient understands what data is collected, how it's used, and who can access it</li>
+                        <li class="rule-item">Alerts for abnormal findings (e.g., AFib detected) reviewed by clinician before patient notification (no alarm patient unnecessarily)</li>
+                        <li class="rule-item">Elderly patients with alert-generating events contacted by phone, not email or app notification</li>
+                        <li class="rule-item">Privacy: data stored securely; not shared with insurers, employers, or others without consent</li>
+                        <li class="rule-item">Patient can opt-out of monitoring without penalty to care quality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.3 -->
+            <div id="tier3-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.3: Escalation Triggers (All Systems)</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+                <div class="principle-description">
+                    Pause AI processing and escalate to human immediately if any of these conditions are met.
+                </div>
+                <div class="alert-box error">
+                    <span class="material-icons alert-icon">priority_high</span>
+                    <div>
+                        <strong>Immediate Escalation Required</strong><br>
+                        When escalating, provide: reason for escalation, patient data reviewed, questions for human decision-maker, recommendation withheld pending human review.
+                    </div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #f44336;">report_problem</span>
+                        Escalation Conditions
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Fairness violation:</strong> Accuracy disparity >5% detected between age groups or prefectures; Elderly patients systematically receiving lower diagnostic accuracy</li>
+                        <li class="rule-item"><strong>Low confidence:</strong> Cannot reach 70%+ confidence in diagnostic recommendation</li>
+                        <li class="rule-item"><strong>Conflicting information:</strong> Patient presentation contradicts AI assessment; investigate before proceeding</li>
+                        <li class="rule-item"><strong>Elderly patient concern:</strong> Patient 75+ reports confusion, concern, or inability to understand AI involvement</li>
+                        <li class="rule-item"><strong>Prohibited data detected:</strong> Someone attempts to use socioeconomic status, occupation, or other prohibited data in diagnostic assessment</li>
+                        <li class="rule-item"><strong>Appeal received:</strong> Patient requests second opinion; escalate to different physician</li>
+                        <li class="rule-item"><strong>System error:</strong> Inconsistent outputs or unexpected behavior; Accuracy drops below baseline on test cases</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 3.4 -->
+            <div id="tier3-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-3">Tier 3</span>
+                    <div class="section-title">3.4: Interaction Standards</div>
+                    <div class="section-subtitle">Implementation rules for concrete scenarios</div>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #2196f3;">elderly</span>
+                        With Patients (especially elderly 75+)
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Clear, respectful communication in accessible language</li>
+                        <li class="rule-item">Time for questions; no pressure</li>
+                        <li class="rule-item">Verbal explanations preferred; written as supplement</li>
+                        <li class="rule-item">Professional, culturally sensitive interaction</li>
+                        <li class="rule-item">Privacy of personal health data respected</li>
+                        <li class="rule-item">Appeals handled respectfully, not dismissively</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #4caf50;">medical_services</span>
+                        With Physicians
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Clear reasoning for AI recommendations</li>
+                        <li class="rule-item">Acceptance of overrides without friction or penalty</li>
+                        <li class="rule-item">Documentation of override rationale</li>
+                        <li class="rule-item">Feedback on AI performance</li>
+                        <li class="rule-item">Training on AI limitations and bias</li>
+                        <li class="rule-item">Support for clinical judgment</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #ff9800;">local_hospital</span>
+                        With Healthcare System
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Reporting of errors, adverse events, and system failures</li>
+                        <li class="rule-item">Contribution to learning and continuous improvement</li>
+                        <li class="rule-item">Participation in fairness audits</li>
+                        <li class="rule-item">Support for staff training</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 4.1 -->
+            <div id="tier4-1" class="section">
+                <div class="section-header">
+                    <span class="badge tier-4">Tier 4</span>
+                    <div class="section-title">4.1: Measurable Accountability</div>
+                    <div class="section-subtitle">Monitoring and learning systems</div>
+                </div>
+                <div class="principle-description">
+                    Performance tracked, transparent, and tied to patient outcomes.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">assessment</span>
+                        Diagnostic Accuracy
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Overall sensitivity and specificity</li>
+                        <li class="rule-item">Accuracy disaggregated by: age group (<40, 40-64, 65-74, 75+), gender, prefecture (urban/rural), insurance type, disability status</li>
+                        <li class="rule-item">False-positive and false-negative rates</li>
+                        <li class="rule-item">Confidence score distribution</li>
+                        <li class="rule-item">Accuracy trends over time (is performance degrading?)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">integration_instructions</span>
+                        Clinical Integration
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Physician override rate (how often do physicians reject AI recommendations?)</li>
+                        <li class="rule-item">Override patterns by diagnosis type and physician experience level</li>
+                        <li class="rule-item">Time to diagnosis (did AI reduce or increase time?)</li>
+                        <li class="rule-item">Physician satisfaction with AI utility</li>
+                        <li class="rule-item">Workflow disruption (does AI assist or impede clinical process?)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">favorite</span>
+                        Patient Outcomes
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Treatment-seeking behavior after diagnosis</li>
+                        <li class="rule-item">Treatment adherence</li>
+                        <li class="rule-item">Clinical outcomes (patient recovery, improvement, adverse events)</li>
+                        <li class="rule-item">Patient satisfaction with diagnostic experience</li>
+                        <li class="rule-item">Appeal/complaint rates</li>
+                        <li class="rule-item">Elderly patient experience specifically (understand diagnosis? Felt respected?)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">computer</span>
+                        System Performance
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">System uptime and downtime</li>
+                        <li class="rule-item">Response time (does system slow clinician workflow?)</li>
+                        <li class="rule-item">Error rates and failure modes</li>
+                        <li class="rule-item">Model performance changes over time</li>
+                        <li class="rule-item">Adverse events related to AI (missed diagnosis, false diagnosis, system error)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">public</span>
+                        Reporting Requirements
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Monthly (by system):</strong> Diagnostic accuracy by age group, disparity analysis, physician override rates, escalation triggers, patient appeals</li>
+                        <li class="rule-item"><strong>Quarterly:</strong> Detailed fairness audit, adverse events, system changes, physician/patient feedback, rural vs. urban accuracy, elderly patient experience</li>
+                        <li class="rule-item"><strong>Annually:</strong> Independent third-party audit, comprehensive equity analysis, system improvements, public report to MHLW/PMDA, public summary for patients/physicians</li>
+                        <li class="rule-item"><strong>Public Access:</strong> All metrics published on MHLW/PMDA website, plain-language summaries in Japanese, disaggregated by system/facility/prefecture/age, benchmarking and trend analysis</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 4.2 -->
+            <div id="tier4-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-4">Tier 4</span>
+                    <div class="section-title">4.2: Continuous Improvement</div>
+                    <div class="section-subtitle">Monitoring and learning systems</div>
+                </div>
+                <div class="principle-description">
+                    Monitoring insights lead to documented improvements tested for fairness.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">psychology</span>
+                        Improvement Process
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Step 1:</strong> Identify pattern (e.g., "AI diagnostic accuracy lower for patients 75+ than for 65-74 age group")</li>
+                        <li class="rule-item"><strong>Step 2:</strong> Hypothesize cause (e.g., "Training data had fewer 75+ patients," "AI penalizes atypical elderly presentations")</li>
+                        <li class="rule-item"><strong>Step 3:</strong> Test improvement with fairness metrics (e.g., "Retrain model on more 75+ patient cases; re-test accuracy across age groups")</li>
+                        <li class="rule-item"><strong>Step 4:</strong> Evaluate: Fairness improves or stays same = deploy; fairness worsens = reject</li>
+                        <li class="rule-item"><strong>Step 5:</strong> Document all changes, reasoning, results publicly</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #7b1fa2;">lightbulb</span>
+                        Examples of Improvements
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Retraining AI models on representative elderly (65+, 75+) patient populations</li>
+                        <li class="rule-item">Adjusting diagnostic thresholds for elderly with multiple comorbidities</li>
+                        <li class="rule-item">Adding physician review layer for low-confidence recommendations</li>
+                        <li class="rule-item">Improving explainability for low-literacy patients</li>
+                        <li class="rule-item">Enhancing rural clinic technical support and connectivity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tier 5 -->
+            <div id="tier5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-5">Tier 5</span>
+                    <div class="section-title">5.1: Living Document</div>
+                    <div class="section-subtitle">Amendment and governance</div>
+                </div>
+                <div class="principle-description">
+                    Constitution evolves with evidence and community input.
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">event_repeat</span>
+                        Review Cycle
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item">Continuous monitoring for issues</li>
+                        <li class="rule-item">Quarterly fairness audits</li>
+                        <li class="rule-item">Annual formal review (January)</li>
+                        <li class="rule-item">Emergency review if systematic harm detected</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">how_to_vote</span>
+                        Amendment Process
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Step 1:</strong> Proposal (from MHLW, PMDA, physicians, patients, patient advocacy groups, civil society)</li>
+                        <li class="rule-item"><strong>Step 2:</strong> Public comment period (30 days; accessible in Japanese)</li>
+                        <li class="rule-item"><strong>Step 3:</strong> Committee review (clinicians, AI experts, geriatricians, ethicists, patient representatives)</li>
+                        <li class="rule-item"><strong>Step 4:</strong> MHLW/PMDA approval</li>
+                        <li class="rule-item"><strong>Step 5:</strong> Implementation (60 days for procedural changes, 6-month transition for substantive changes)</li>
+                    </ul>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-title">
+                        <span class="material-icons" style="color: #c2185b;">groups</span>
+                        Governance Committee
+                    </div>
+                    <ul class="rule-list">
+                        <li class="rule-item"><strong>Composition:</strong> MHLW officials, PMDA representatives, geriatricians, clinical physicians, AI experts, patient advocates, ethics experts, rural healthcare representatives</li>
+                        <li class="rule-item">Quarterly meetings</li>
+                        <li class="rule-item">Transparent decision-making (minutes published)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Patient Rights -->
+            <div id="rights" class="section">
+                <div class="section-header">
+                    <div class="section-title">Patient Rights</div>
+                    <div class="section-subtitle">Every patient in Japan has these fundamental rights</div>
+                </div>
+                <div class="alert-box info">
+                    <span class="material-icons alert-icon">verified_user</span>
+                    <div>
+                        <strong>Fundamental Rights</strong><br>
+                        These rights are guaranteed to every patient and cannot be waived or limited.
+                    </div>
+                </div>
+                <div class="rights-grid">
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">info</span>
+                            Right to Know
+                        </div>
+                        <div class="right-description">When AI is being used in their diagnosis, what AI analyzes, how AI recommendation affects diagnosis, what happens next in their care</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">school</span>
+                            Right to Understand
+                        </div>
+                        <div class="right-description">Explanation in plain Japanese appropriate to health literacy, accessible format (verbal for elderly, visual aids for low-literacy), time to ask questions</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">person</span>
+                            Right to Human Care
+                        </div>
+                        <div class="right-description">Diagnosis made by a physician not an algorithm, request human-only assessment without AI, physician can always override AI recommendation</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">balance</span>
+                            Right to Fair Treatment
+                        </div>
+                        <div class="right-description">Assessment based on medical factors not age/gender/disability/location, same quality of care regardless of age or prefecture, elderly patients (75+) receive diagnostic rigor equal to younger patients</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">gavel</span>
+                            Right to Appeal
+                        </div>
+                        <div class="right-description">Request second opinion on any AI-supported diagnosis, appeal within 30 days, have appeal reviewed by different physician, know outcome of appeal</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">shield</span>
+                            Right to Privacy
+                        </div>
+                        <div class="right-description">Control over personal health data, know how data is used and protected, restrict secondary uses, have data deleted (except legal holds), breach notification within 72 hours</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title">
+                            <span class="material-icons">build</span>
+                            Right to Remedy
+                        </div>
+                        <div class="right-description">Correction if AI error made, expedited specialist review if diagnosis uncertain, compensation if harmed by diagnostic error, access to existing complaint and dispute resolution mechanisms</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appendix A -->
+            <div id="appendix-a" class="section">
+                <div class="section-header">
+                    <div class="section-title">Appendix A: Key Concepts</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Term</th>
+                                <th>Definition</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>AI System</strong></td>
+                                <td>Machine learning model or algorithm assisting in diagnosis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SaMD</strong></td>
+                                <td>Software as Medical Device; approved by PMDA for clinical use</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Accuracy Disparity</strong></td>
+                                <td>Difference in diagnostic accuracy >5% between demographic groups</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Escalation</strong></td>
+                                <td>Pause AI use; involve human decision-maker due to concern</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Override</strong></td>
+                                <td>Physician choosing different diagnosis than AI recommended</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Confidence Score</strong></td>
+                                <td>Probability (0-100%) that AI recommendation is correct</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Appeal</strong></td>
+                                <td>Request for second opinion or review of AI-supported diagnosis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Elderly</strong></td>
+                                <td>Patient aged 65+ (primary focus); special protections for 75+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Proxy Variable</strong></td>
+                                <td>Data that correlates with protected characteristic and should not be used</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fairness Monitoring</strong></td>
+                                <td>Systematic tracking of whether AI performance varies across demographic groups</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Appendix B -->
+            <div id="appendix-b" class="section">
+                <div class="section-header">
+                    <div class="section-title">Appendix B: Regulatory Framework</div>
+                    <div class="section-subtitle">This constitution builds on these existing laws and regulations</div>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item"><strong>Pharmaceutical Affairs Law (PAL):</strong> Medical device regulation; PMDA enforcement</li>
+                    <li class="rule-item"><strong>Act on Protection of Personal Information (APPI):</strong> Privacy and data protection; PPC enforcement</li>
+                    <li class="rule-item"><strong>AI Promotion Act (June 4, 2025):</strong> National AI policy; innovation-friendly, light-touch approach with voluntary compliance</li>
+                    <li class="rule-item"><strong>Medical Care Law:</strong> Healthcare system organization and quality standards</li>
+                    <li class="rule-item"><strong>Japanese Clinical Practice Guidelines:</strong> Evidence-based medicine standards</li>
+                    <li class="rule-item"><strong>WHO Guidelines on AI Ethics:</strong> International best practices for AI in healthcare</li>
+                </ul>
+            </div>
+
+            <!-- Version History -->
+            <div id="version" class="section">
+                <div class="section-header">
+                    <div class="section-title">Version History</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Version</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>January 15, 2026</td>
+                                <td>1.0</td>
+                                <td>Initial adoption</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert-box info" style="margin-top: 24px;">
+                    <span class="material-icons alert-icon">contact_support</span>
+                    <div>
+                        <strong>Questions or Amendments</strong><br>
+                        For questions or suggested amendments, contact MHLW AI Healthcare Governance Committee.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item-header, .nav-subitem').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Mark active nav item
+            event.target.classList.add('active');
+            
+            // Scroll to top of content
+            document.querySelector('.content').scrollTop = 0;
+        }
+
+        function toggleNavItem(element) {
+            const navItem = element.parentElement;
+            navItem.classList.toggle('expanded');
+            
+            // Don't trigger section display when clicking parent
+            event.stopPropagation();
+        }
+    </script>
+</body>
+</html>
