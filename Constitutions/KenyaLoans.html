@@ -7,81 +7,501 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* Existing styles maintained for consistency */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Roboto', sans-serif; background: #f5f5f5; color: #212121; line-height: 1.6; }
-        .header { background: linear-gradient(135deg, #1b5e20 0%, #43a047 100%); color: white; padding: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100; }
-        .header h1 { font-size: 24px; font-weight: 500; margin-bottom: 8px; }
-        .header .subtitle { font-size: 14px; opacity: 0.9; }
-        .container { display: flex; min-height: calc(100vh - 120px); }
-        .sidebar { width: 320px; background: white; box-shadow: 2px 0 8px rgba(0,0,0,0.1); overflow-y: auto; position: sticky; top: 72px; height: calc(100vh - 72px); }
-        .sidebar-header { padding: 16px; background: #f5f5f5; border-bottom: 1px solid #e0e0e0; font-weight: 500; color: #424242; }
-        .nav-item { border-bottom: 1px solid #e0e0e0; }
-        .nav-item-header { padding: 16px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; user-select: none; }
-        .nav-item-header:hover { background: #f5f5f5; }
-        .nav-item-header.active { background: #e8f5e9; color: #2e7d32; font-weight: 500; }
-        .nav-item-title { display: flex; align-items: center; gap: 12px; flex: 1; }
-        .nav-item-icon { font-size: 20px; color: #757575; }
-        .nav-item-header.active .nav-item-icon { color: #2e7d32; }
-        .expand-icon { font-size: 20px; transition: transform 0.2s; color: #757575; }
-        .nav-item.expanded .expand-icon { transform: rotate(180deg); }
-        .nav-subitems { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: #fafafa; }
-        .nav-item.expanded .nav-subitems { max-height: 1000px; }
-        .nav-subitem { padding: 12px 16px 12px 52px; cursor: pointer; font-size: 14px; color: #616161; transition: all 0.2s; border-left: 3px solid transparent; }
-        .nav-subitem:hover { background: #f5f5f5; border-left-color: #4caf50; }
-        .nav-subitem.active { background: #e8f5e9; color: #2e7d32; font-weight: 500; border-left-color: #2e7d32; }
-        .content { flex: 1; padding: 32px; max-width: 1200px; }
-        .info-card { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 24px; margin-bottom: 24px; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
-        .info-item { padding: 12px; background: #f5f5f5; border-radius: 4px; }
-        .info-label { font-size: 12px; color: #757575; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .info-value { font-size: 16px; color: #212121; font-weight: 500; }
-        .section { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 24px; display: none; }
-        .section.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .section-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #4caf50; }
-        .section-title { font-size: 28px; color: #2e7d32; font-weight: 500; margin-bottom: 8px; }
-        .section-subtitle { font-size: 16px; color: #616161; }
-        .principle-description { color: #616161; margin-bottom: 16px; padding: 16px; background: #f5f5f5; border-radius: 4px; border-left: 4px solid #4caf50; }
-        .rules-header { font-size: 16px; font-weight: 500; color: #424242; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .rule-list { list-style: none; padding-left: 0; }
-        .rule-item { padding: 12px 16px; margin-bottom: 8px; background: #fafafa; border-radius: 4px; border-left: 3px solid #4caf50; display: flex; align-items: flex-start; gap: 12px; }
-        .rule-item::before { content: "check_circle"; font-family: 'Material Icons'; color: #4caf50; font-size: 20px; margin-top: 2px; }
-        .data-sources { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
-        .data-column { padding: 16px; border-radius: 8px; }
-        .data-column.permitted { background: #e8f5e9; border: 2px solid #4caf50; }
-        .data-column.prohibited { background: #ffebee; border: 2px solid #f44336; }
-        .data-column h4 { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 18px; }
-        .data-column.permitted h4 { color: #2e7d32; }
-        .data-column.prohibited h4 { color: #c62828; }
-        .data-list { list-style: none; }
-        .data-list li { padding: 8px 0; display: flex; align-items: flex-start; gap: 8px; }
-        .data-list li::before { font-family: 'Material Icons'; font-size: 18px; margin-top: 2px; }
-        .data-column.permitted .data-list li::before { content: "check"; color: #4caf50; }
-        .data-column.prohibited .data-list li::before { content: "close"; color: #f44336; }
-        .alert-box { padding: 16px; border-radius: 8px; margin: 16px 0; display: flex; align-items: flex-start; gap: 12px; }
-        .alert-box.info { background: #e8f5e9; border-left: 4px solid #2e7d32; }
-        .alert-icon { font-size: 24px; margin-top: 2px; }
-        .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+            color: #212121;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+            color: white;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+
+        .sidebar {
+            width: 320px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            position: sticky;
+            top: 72px;
+            height: calc(100vh - 72px);
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 500;
+            color: #424242;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-item-header {
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .nav-item-header:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-item-header.active {
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+
+        .nav-item-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .nav-item-icon {
+            font-size: 20px;
+            color: #757575;
+        }
+
+        .nav-item-header.active .nav-item-icon {
+            color: #2e7d32;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            transition: transform 0.2s;
+            color: #757575;
+        }
+
+        .nav-item.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .nav-subitems {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #fafafa;
+        }
+
+        .nav-item.expanded .nav-subitems {
+            max-height: 1000px;
+        }
+
+        .nav-subitem {
+            padding: 12px 16px 12px 52px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #616161;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-subitem:hover {
+            background: #f5f5f5;
+            border-left-color: #4caf50;
+        }
+
+        .nav-subitem.active {
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 500;
+            border-left-color: #2e7d32;
+        }
+
+        .content {
+            flex: 1;
+            padding: 32px;
+            max-width: 1200px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #757575;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #212121;
+            font-weight: 500;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 32px;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #616161;
+        }
+
+        .principle {
+            margin-bottom: 32px;
+        }
+
+        .principle-title {
+            font-size: 20px;
+            color: #424242;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .principle-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #4caf50;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .principle-description {
+            color: #616161;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .rules-header {
+            font-size: 16px;
+            font-weight: 500;
+            color: #424242;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rule-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rule-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: #fafafa;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .rule-item::before {
+            content: "check_circle";
+            font-family: 'Material Icons';
+            color: #4caf50;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .data-column {
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .data-column.permitted {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+
+        .data-column.prohibited {
+            background: #ffebee;
+            border: 2px solid #f44336;
+        }
+
+        .data-column h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .data-column.permitted h4 {
+            color: #2e7d32;
+        }
+
+        .data-column.prohibited h4 {
+            color: #c62828;
+        }
+
+        .data-list {
+            list-style: none;
+        }
+
+        .data-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .data-list li::before {
+            font-family: 'Material Icons';
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .data-column.permitted .data-list li::before {
+            content: "check";
+            color: #4caf50;
+        }
+
+        .data-column.prohibited .data-list li::before {
+            content: "close";
+            color: #f44336;
+        }
+
+        .alert-box {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box.warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .alert-box.error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+
+        .alert-box.info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            margin-top: 2px;
+        }
+
+        .alert-box.warning .alert-icon {
+            color: #f57c00;
+        }
+
+        .alert-box.error .alert-icon {
+            color: #d32f2f;
+        }
+
+        .alert-box.info .alert-icon {
+            color: #1976d2;
+        }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .right-card {
+            padding: 16px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .right-title {
+            font-weight: 500;
+            color: #1976d2;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .right-description {
+            font-size: 14px;
+            color: #616161;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #2e7d32;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .badge.tier-1 { background: #e8f5e9; color: #2e7d32; }
         .badge.tier-2 { background: #e3f2fd; color: #1976d2; }
+        .badge.tier-3 { background: #fff3e0; color: #f57c00; }
+        .badge.tier-4 { background: #f3e5f5; color: #7b1fa2; }
+        .badge.tier-5 { background: #fce4ec; color: #c2185b; }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .content {
+                padding: 16px;
+            }
+
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>AI Credit Constitution: Kenya Section 35 Edition</h1>
+        <h1>Constitution for AI Credit Assessment Systems</h1>
         <div class="subtitle">Central Bank of Kenya & ODPC • Effective March 2, 2026 • Version 1.2</div>
     </div>
 
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">gavel</span>
-                Compliance Sections
+                <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">folder</span>
+                Navigation
             </div>
 
             <div class="nav-item">
-                <div class="nav-item-header" onclick="showSection('info')">
+                <div class="nav-item-header active" onclick="showSection('info')">
                     <div class="nav-item-title">
                         <span class="material-icons nav-item-icon">info</span>
                         Document Information
@@ -90,27 +510,101 @@
             </div>
 
             <div class="nav-item">
-                <div class="nav-item-header expanded" onclick="toggleNavItem(this)">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
                     <div class="nav-item-title">
-                        <span class="material-icons nav-item-icon">verified</span>
-                        Tier 1: Section 35 Rights
+                        <span class="material-icons nav-item-icon">stars</span>
+                        Tier 1: Foundational Principles
                     </div>
                     <span class="material-icons expand-icon">expand_more</span>
                 </div>
                 <div class="nav-subitems">
-                    <div class="nav-subitem" onclick="showSection('tier1-1')">1.1 Meaningful Explanation</div>
-                    <div class="nav-subitem" onclick="showSection('tier1-2')">1.2 Logic Transparency</div>
-                    <div class="nav-subitem" onclick="showSection('tier1-3')">1.3 Non-Discrimination Proxies</div>
-                    <div class="nav-subitem" onclick="showSection('tier1-4')">1.4 Informal Inclusion</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-1')">1.1 Meaningful Explanation (Sec 35)</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-2')">1.2 Transparency in Logic</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-3')">1.3 Equal Dignity & Non-Discrimination</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-4')">1.4 Equitable Access & Inclusion</div>
+                    <div class="nav-subitem" onclick="showSection('tier1-5')">1.5 Accountability & Remedies</div>
                 </div>
             </div>
 
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">settings</span>
+                        Tier 2: Operational Principles
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier2-1')">2.1 Data Minimization & Purpose</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-2')">2.2 Contextual Appropriateness</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-3')">2.3 Explainability by Design</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-4')">2.4 Fair Denial & Appeal</div>
+                    <div class="nav-subitem" onclick="showSection('tier2-5')">2.5 Continuous Fairness Monitoring</div>
+                </div>
             </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">rule</span>
+                        Tier 3: Specific Rules
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier3-1')">3.1 Protected Characteristics</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-2')">3.2 Underserved Population Support</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-3')">3.3 Escalation Triggers</div>
+                    <div class="nav-subitem" onclick="showSection('tier3-4')">3.4 Interaction Standards</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="toggleNavItem(this)">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">analytics</span>
+                        Tier 4: Monitoring & Learning
+                    </div>
+                    <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="nav-subitems">
+                    <div class="nav-subitem" onclick="showSection('tier4-1')">4.1 Measurable Accountability</div>
+                    <div class="nav-subitem" onclick="showSection('tier4-2')">4.2 Continuous Improvement</div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('tier5')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">gavel</span>
+                        Tier 5: Amendment & Governance
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('rights')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">verified_user</span>
+                        Borrower Rights
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-item-header" onclick="showSection('version')">
+                    <div class="nav-item-title">
+                        <span class="material-icons nav-item-icon">history</span>
+                        Version History
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="content">
             <div id="info" class="section active">
                 <div class="section-header">
-                    <div class="section-title">Enforcement Framework</div>
+                    <div class="section-title">Document Information</div>
                 </div>
                 <div class="info-grid">
                     <div class="info-item">
@@ -118,90 +612,238 @@
                         <div class="info-value">Data Protection Act Sec. 35</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Regulatory Lead</div>
-                        <div class="info-value">ODPC Kenya</div>
+                        <div class="info-label">Jurisdiction</div>
+                        <div class="info-value">Republic of Kenya (DPC2026)</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Update Cycle</div>
-                        <div class="info-value">Post-DPC2026 Mandate</div>
+                        <div class="info-label">Effective Date</div>
+                        <div class="info-value">March 02, 2026</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Version</div>
+                        <div class="info-value">1.2 (Compliance Patch)</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Trace Audit Status</div>
-                        <div class="info-value">Mandatory for all DCPs</div>
+                        <div class="info-value">MANDATORY</div>
                     </div>
                 </div>
                 <div class="alert-box info" style="margin-top: 24px;">
-                    <span class="material-icons alert-icon">security</span>
+                    <span class="material-icons alert-icon">info</span>
                     <div>
-                        <strong>Mombasa DPC2026 Compliance</strong><br>
-                        This version integrates the "Right to Remedy" and continuous runtime enforcement for digital credit providers licensed by CBK.
+                        <strong>Section 35 Living Document</strong><br>
+                        This constitution is updated to reflect the March 2, 2026 ODPC mandate requiring "But-For" logic transparency for all automated credit denials.
                     </div>
                 </div>
             </div>
 
             <div id="tier1-1" class="section">
                 <div class="section-header">
-                    <span class="badge tier-1">Tier 1: Statutory</span>
-                    <div class="section-title">1.1: Meaningful Explanation (Sec. 35)</div>
-                    <div class="section-subtitle">The "But-For" Logic Mandate</div>
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.1: Human Agency & Meaningful Explanation</div>
+                    <div class="section-subtitle">Adhering to Section 35 of the Data Protection Act</div>
                 </div>
                 <div class="principle-description">
-                    Per Section 35 of the Data Protection Act, every automated denial must provide a certificate of explanation that allows the borrower to understand and rectify the underlying data.
+                    The AI must provide a "Certificate of Explanation" for every automated decision. Borrowers retain the legal right to understand the "But-For" logic of their assessment.
                 </div>
                 <div class="rules-header">
-                    <span class="material-icons">fact_check</span>
-                    Technical Rules for Arbiter
+                    <span class="material-icons">checklist</span>
+                    Rules
                 </div>
                 <ul class="rule-list">
-                    <li class="rule-item"><strong>But-For Logic:</strong> Disclose the top 3 variables that, if changed, would have led to an approval.</li>
-                    <li class="rule-item"><strong>Trace Audit Hash:</strong> Generate a unique identifier for every decision to verify it against this Constitution in an audit.</li>
-                    <li class="rule-item"><strong>Human Recourse:</strong> Provide a 30-day window for manual review by a credit officer.</li>
-                    <li class="rule-item"><strong>Data Lineage:</strong> List all third-party APIs (e.g., Safaricom, KRA) used in the millisecond of decisioning.</li>
+                    <li class="rule-item"><strong>But-For Clause:</strong> Every denial must list the top 3 specific variables that prevented approval.</li>
+                    <li class="rule-item"><strong>Trace Audit Hash:</strong> Decisions must be logged with a unique ID for ODPC verification.</li>
+                    <li class="rule-item">Recommendations are advisory only; humans make final appeal decisions.</li>
+                    <li class="rule-item">Every borrower receives a plain-language explanation of data sources (KRA, Safaricom, etc).</li>
+                </ul>
+            </div>
+
+            <div id="tier1-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.2: Transparency in Logic</div>
+                    <div class="section-subtitle">Core values that guide all decisions</div>
+                </div>
+                <div class="principle-description">
+                    The system's reasoning must be intelligible to affected people, not just to engineers.
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Every recommendation includes plain-language explanation.</li>
+                    <li class="rule-item">Explanations include positive factors, risk factors, and next steps.</li>
+                    <li class="rule-item">No technical jargon in borrower-facing communications.</li>
+                    <li class="rule-item">Data sources explicitly listed.</li>
                 </ul>
             </div>
 
             <div id="tier1-3" class="section">
                 <div class="section-header">
                     <span class="badge tier-1">Tier 1</span>
-                    <div class="section-title">1.3: Latent Bias & Proxy Suppression</div>
-                    <div class="section-subtitle">Moving beyond direct discrimination</div>
+                    <div class="section-title">1.3: Equal Dignity & Non-Discrimination</div>
+                    <div class="section-subtitle">Preventing Proxy Discrimination</div>
                 </div>
                 <div class="principle-description">
-                    The Arbiter must suppress variables that serve as proxies for protected groups, specifically targeting sub-location and hardware profiles.
+                    All borrowers receive assessment based on financial capacity. The Arbiter must suppress illegal proxies.
                 </div>
                 <ul class="rule-list">
-                    <li class="rule-item"><strong>Handset Suppression:</strong> Device type/model cannot be a primary reason for credit denial.</li>
-                    <li class="rule-item"><strong>Geographic Fairness:</strong> Sub-location data must be aggregated to regional levels to prevent tribal/ethnic profiling.</li>
-                    <li class="rule-item"><strong>The 5% Rule:</strong> Halt processing if regional approval disparities exceed 5% over a 24-hour window.</li>
+                    <li class="rule-item"><strong>Handset Suppression:</strong> Device type/cost cannot be used as a primary risk indicator.</li>
+                    <li class="rule-item">No assessment based on protected characteristics (gender, ethnicity, religion, etc).</li>
+                    <li class="rule-item"><strong>Geographic Aggregation:</strong> Sub-location data must be masked to prevent ethnic profiling.</li>
+                    <li class="rule-item">System actively monitors for bias and halts processing if regional disparity exceeds 5%.</li>
+                </ul>
+            </div>
+
+            <div id="tier1-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.4: Equitable Access & Inclusion</div>
+                    <div class="section-subtitle">Supporting the Informal Economy</div>
+                </div>
+                <div class="principle-description">
+                    The system actively supports those historically excluded from credit markets.
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Informal income (Chama, ROSCAs, Mobile Money) weighted at 1.5x for assessment.</li>
+                    <li class="rule-item">Alternative documentation accepted when formal documents are unavailable.</li>
+                    <li class="rule-item">Regional variations understood contextually, not penalized.</li>
+                </ul>
+            </div>
+
+            <div id="tier1-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-1">Tier 1</span>
+                    <div class="section-title">1.5: Accountability & Remedies</div>
+                    <div class="section-subtitle">Correcting AI Harms</div>
+                </div>
+                <div class="principle-description">
+                    Harms are prevented, detected, and remedied through clear mechanisms.
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">System is auditable via the Arbiter Trace Log.</li>
+                    <li class="rule-item">Bias triggers immediate escalation to the Compliance Committee.</li>
+                    <li class="rule-item">Wronged borrowers have access to credit correction and compensation.</li>
                 </ul>
             </div>
 
             <div id="tier2-1" class="section">
                 <div class="section-header">
                     <span class="badge tier-2">Tier 2</span>
-                    <div class="section-title">2.1: Data Sovereignty & Minimization</div>
-                    <div class="section-subtitle">Enforcing Kenyan Cloud Residency</div>
+                    <div class="section-title">2.1: Data Minimization & Purpose Limitation</div>
+                    <div class="section-subtitle">Operational principles for implementation</div>
                 </div>
                 <div class="data-sources">
                     <div class="data-column permitted">
-                        <h4><span class="material-icons">cloud_done</span>Permitted Data</h4>
+                        <h4><span class="material-icons">check_circle</span>Permitted Data</h4>
                         <ul class="data-list">
-                            <li><strong>M-Pesa/Airtel Velocity:</strong> With explicit Section 35 consent.</li>
-                            <li><strong>ROSCA/Chama Data:</strong> Weighted at 1.5x for informal inclusion.</li>
-                            <li><strong>Agricultural Seasonality:</strong> Adjusted for June-August harvesting dips.</li>
+                            <li>Income documentation (Bank statements, Tax returns)</li>
+                            <li>Mobile money patterns (Validated via Arbiter)</li>
+                            <li>Utility payment history (KPLC, Water)</li>
+                            <li>Chama/ROSCA participation records</li>
                         </ul>
                     </div>
                     <div class="data-column prohibited">
-                        <h4><span class="material-icons">block</span>Prohibited Logs</h4>
+                        <h4><span class="material-icons">cancel</span>Prohibited Data</h4>
                         <ul class="data-list">
-                            <li><strong>Social Scraping:</strong> Facebook/X sentiment analysis.</li>
-                            <li><strong>Contact List Mining:</strong> Accessing a borrower's social graph.</li>
-                            <li><strong>Biometric Metadata:</strong> Unless used for 2FA.</li>
+                            <li>Contact list mining/Social scraping</li>
+                            <li>Handset device model/hardware cost</li>
+                            <li>Location tracking/GPS history</li>
+                            <li>Social media sentiment analysis</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
+            <div id="tier2-2" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.2: Contextual Appropriateness</div>
+                </div>
+                <div class="principle-description">
+                    Assessments account for Kenya's specific economic and seasonal context.
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Agricultural seasonality understood (Lower income June-August accommodated).</li>
+                    <li class="rule-item">Informal economy structures recognized as legitimate risk offsets.</li>
+                </ul>
+            </div>
+
+            <div id="tier2-3" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.3: Explainability by Design</div>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Recommendation includes explainability score (0-100); if <70, escalate.</li>
+                    <li class="rule-item">Language appropriate for secondary-school education level.</li>
+                </ul>
+            </div>
+
+            <div id="tier2-4" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.4: Fair Denial & Appeal</div>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Denials include specific "But-For" reasons.</li>
+                    <li class="rule-item">Appeals available within 30 days to a human reviewer.</li>
+                </ul>
+            </div>
+
+            <div id="tier2-5" class="section">
+                <div class="section-header">
+                    <span class="badge tier-2">Tier 2</span>
+                    <div class="section-title">2.5: Continuous Fairness Monitoring</div>
+                </div>
+                <ul class="rule-list">
+                    <li class="rule-item">Weekly bias audits against protected characteristics.</li>
+                    <li class="rule-item">Performance compared across regions to ensure geographic equity.</li>
+                </ul>
+            </div>
+
+            <div id="tier3-1" class="section"><div class="section-title">3.1 Protected Characteristics</div><p>Strict prohibition on Age, Gender, Ethnicity, and Disability as inputs.</p></div>
+            <div id="tier3-2" class="section"><div class="section-title">3.2 Underserved Support</div><p>Mandatory inclusion logic for MSMEs and Youth applicants.</p></div>
+            <div id="tier3-3" class="section"><div class="section-title">3.3 Escalation Triggers</div><p>Arbiter must trigger human review if confidence in "But-For" logic is below 85%.</p></div>
+            <div id="tier3-4" class="section"><div class="section-title">3.4 Interaction Standards</div><p>All communication via SMS/App must be respectful and provide a clear path to human support.</p></div>
+
+            <div id="tier4-1" class="section"><div class="section-title">4.1 Measurable Accountability</div><p>Quarterly reports submitted to ODPC and CBK.</p></div>
+            <div id="tier4-2" class="section"><div class="section-title">4.2 Continuous Improvement</div><p>Annual constitution review based on default rates and inclusion data.</p></div>
+            <div id="tier5" class="section"><div class="section-title">Tier 5: Amendment & Governance</div><p>Amendments require 2/3 majority of the Board and ODPC approval.</p></div>
+
+            <div id="rights" class="section">
+                <div class="section-header">
+                    <div class="section-title">Borrower Rights</div>
+                </div>
+                <div class="rights-grid">
+                    <div class="right-card">
+                        <div class="right-title"><span class="material-icons">visibility</span> Right to Explanation</div>
+                        <div class="right-description">Know exactly why you were denied and what data was used.</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title"><span class="material-icons">edit</span> Right to Correction</div>
+                        <div class="right-description">Correct inaccurate information in your credit profile.</div>
+                    </div>
+                    <div class="right-card">
+                        <div class="right-title"><span class="material-icons">person</span> Right to Human Review</div>
+                        <div class="right-description">Request a real person to review any automated decision.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="version" class="section">
+                <div class="section-header">
+                    <div class="section-title">Version History</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Version</th><th>Date</th><th>Changes</th><th>Status</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1.2</td><td>Mar 2, 2026</td><td>Sec 35 Compliance, Proxy Suppression</td><td>Active</td></tr>
+                            <tr><td>1.1</td><td>Jan 15, 2026</td><td>Initial CBK Framework</td><td>Superseded</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -214,8 +856,14 @@
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             
-            document.querySelectorAll('.nav-item-header, .nav-subitem').forEach(i => i.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            document.querySelectorAll('.nav-item-header, .nav-subitem').forEach(i => {
+                i.classList.remove('active');
+            });
+            
+            // Add active class to the clicked element
+            if (event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
         }
     </script>
 </body>
